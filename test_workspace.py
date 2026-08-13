@@ -4,7 +4,7 @@ from app.database import SessionLocal, engine
 
 if __name__ == "__main__":
     print("--- Stage 44 Workspace Verification ---")
-    base_url = "http://127.0.0.1:8000/api/v1/workspace"
+    base_url = "http://127.0.0.1:8000/api/v1/workspace_engine"
 
     # 1. Create Project
     req = {

@@ -8,7 +8,7 @@ from app.services.workspace.project_service import create_project, get_project
 from app.services.workspace.annotation_service import create_annotation, recover_annotation
 from app.services.workspace.note_service import create_note, create_bookmark
 
-router = APIRouter(prefix="/api/v1/workspace", tags=["workspace-engine"])
+router = APIRouter(prefix="/api/v1/workspace_engine", tags=["workspace-engine"])
 
 class CreateProjectRequest(BaseModel):
     title: str
