@@ -52,7 +52,7 @@ interface ExplanationData {
   confidence_band: string;
   signals: {
     type: string;
-    description: str;
+    description: string;
     score: number;
     matched: boolean;
   }[];

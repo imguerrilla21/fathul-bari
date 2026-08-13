@@ -22,7 +22,7 @@ import Link from "next/link";
 const API_BASE = "http://localhost:8000/api/v1";
 
 interface EvidenceItem {
-  id: str;
+  id: string;
   citation_code: string;
   volume: number;
   printed_page: number;
