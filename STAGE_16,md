@@ -1,0 +1,1741 @@
+# Stage 16 — Research-Grade RAG & Syarah Reasoning
+
+Pada tahap ini kita mengubah sistem dari sekadar **RAG pencarian teks** menjadi **asisten riset syarah yang source-grounded**.
+
+Prinsip utamanya:
+
+> **AI tidak boleh "mengetahui" syarah dari memorinya sendiri lalu mencampurkannya dengan Fathul Bari. AI harus terlebih dahulu menemukan evidence, menyusun evidence, lalu menjawab berdasarkan evidence tersebut.**
+
+---
+
+# 16.1 Arsitektur Target
+
+```text
+                    USER QUESTION
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ QUERY ANALYZER   │
+                └────────┬─────────┘
+                         │
+             ┌───────────┼────────────┐
+             ▼           ▼            ▼
+         Hadith      Intent       Constraints
+         Entity      Detection      Detection
+             │           │            │
+             └───────────┼────────────┘
+                         ▼
+                ┌──────────────────┐
+                │ QUERY PLANNER    │
+                └────────┬─────────┘
+                         │
+          ┌──────────────┼────────────────┐
+          ▼              ▼                ▼
+     Hadith Search   Sharh Search    Graph Search
+          │              │                │
+          └──────────────┼────────────────┘
+                         ▼
+                ┌──────────────────┐
+                │ RERANKER         │
+                └────────┬─────────┘
+                         ▼
+                ┌──────────────────┐
+                │ EVIDENCE BUILDER │
+                └────────┬─────────┘
+                         ▼
+                ┌──────────────────┐
+                │ REASONING ENGINE │
+                └────────┬─────────┘
+                         ▼
+                ┌──────────────────┐
+                │ CITATION GUARD   │
+                └────────┬─────────┘
+                         ▼
+                     ANSWER
+```
+
+---
+
+# 16.2 Tiga Mode Assistant
+
+Kita buat tiga mode utama.
+
+## Mode 1 — Ringkas
+
+Untuk pengguna umum.
+
+```text
+User
+ ↓
+Hadith
+ ↓
+Relevant Sharh
+ ↓
+Short answer
+ ↓
+Citation
+```
+
+Contoh:
+
+> Ibnu Hajar menjelaskan bahwa niat berkaitan dengan maksud hati seseorang dalam melakukan amal. Karena itu, nilai amal sangat terkait dengan tujuan yang melatarbelakanginya.
+
+Lalu:
+
+```text
+[Sumber]
+Fathul Bari — Vol. 1 — hlm. XX
+```
+
+---
+
+# 16.3 Mode 2 — Syarah Mendalam
+
+Untuk pengguna yang ingin memahami penjelasan Ibnu Hajar.
+
+Struktur:
+
+```text
+1. Hadis
+2. Terjemah
+3. Konteks Bab
+4. Penjelasan Ibnu Hajar
+5. Istilah penting
+6. Perbandingan riwayat
+7. Kesimpulan
+8. Sumber
+```
+
+---
+
+# 16.4 Mode 3 — Research Mode
+
+Ini mode paling kuat.
+
+```text
+QUESTION
+   │
+   ▼
+Research Plan
+   │
+   ├── Hadith identification
+   ├── Sharh retrieval
+   ├── Cross-reference search
+   ├── Variant comparison
+   ├── Scholar references
+   └── Source validation
+   │
+   ▼
+Evidence Matrix
+   │
+   ▼
+Research Answer
+```
+
+Jawaban harus memperlihatkan:
+
+```text
+Claim
+Evidence
+Source
+Confidence
+```
+
+---
+
+# 16.5 Query Analyzer
+
+Input:
+
+> "Mengapa Ibnu Hajar mengatakan bahwa amal dinilai berdasarkan niat?"
+
+Analyzer menghasilkan:
+
+```json
+{
+  "intent": "EXPLANATION",
+  "topic": "NIYYAH",
+  "hadith_candidate": "Bukhari_1",
+  "source_constraint": "FATH_AL_BARI",
+  "depth": "DEEP"
+}
+```
+
+---
+
+# 16.6 Intent Classification
+
+Minimal:
+
+```text
+EXPLANATION
+DEFINITION
+COMPARISON
+REFERENCE
+CROSS_REFERENCE
+HISTORICAL_CONTEXT
+FIQH
+LANGUAGE
+NARRATOR
+HADITH_AUTHENTICATION
+SUMMARY
+TRANSLATION
+RESEARCH
+```
+
+Contoh:
+
+> "Apa arti قوله إنما الأعمال بالنيات?"
+
+```text
+LANGUAGE + EXPLANATION
+```
+
+Sedangkan:
+
+> "Bandingkan penjelasan Ibnu Hajar dengan An-Nawawi."
+
+```text
+COMPARISON
+```
+
+---
+
+# 16.7 Source Constraints
+
+User dapat menentukan:
+
+```text
+Only Fathul Bari
+Fathul Bari + Sahih Bukhari
+All classical sources
+All indexed sources
+```
+
+Contoh:
+
+> "Jawab hanya berdasarkan Fathul Bari."
+
+Maka pipeline:
+
+```text
+SOURCE_FILTER =
+FATH_AL_BARI
+```
+
+Model **dilarang mengambil evidence dari corpus lain**.
+
+---
+
+# 16.8 Query Planner
+
+Query tidak langsung dilempar ke vector database.
+
+Planner membuat beberapa sub-query.
+
+Contoh:
+
+```text
+Pertanyaan:
+"Apa makna niat menurut Ibnu Hajar?"
+```
+
+Planner:
+
+```text
+Q1:
+إنما الأعمال بالنيات
+
+Q2:
+قوله إنما الأعمال بالنيات
+
+Q3:
+النية
+
+Q4:
+مباحث النية
+
+Q5:
+مراتب النية
+```
+
+---
+
+# 16.9 Multi-Query Retrieval
+
+```text
+                   QUESTION
+                       │
+                       ▼
+                 QUERY PLANNER
+                       │
+          ┌────────────┼────────────┐
+          ▼            ▼            ▼
+        Query A      Query B      Query C
+          │            │            │
+          ▼            ▼            ▼
+        BM25         Vector       Graph
+          │            │            │
+          └────────────┼────────────┘
+                       ▼
+                  MERGE RESULTS
+```
+
+---
+
+# 16.10 Retrieval Layers
+
+Gunakan empat lapisan:
+
+### Layer 1 — Exact
+
+```text
+Hadith number
+Exact phrase
+Page
+Section ID
+```
+
+### Layer 2 — Lexical
+
+```text
+BM25
+N-gram
+Lemma
+```
+
+### Layer 3 — Semantic
+
+```text
+Embedding
+```
+
+### Layer 4 — Graph
+
+```text
+Hadith
+↓
+Sharh
+↓
+Reference
+↓
+Related section
+```
+
+---
+
+# 16.11 Evidence Builder
+
+Ini komponen inti Stage 16.
+
+Retriever menghasilkan:
+
+```text
+50 chunks
+```
+
+Evidence builder mengubahnya menjadi:
+
+```text
+10 evidence units
+```
+
+Contoh:
+
+```json
+{
+  "evidence_id": "EV-001",
+  "type": "SHARH",
+  "hadith_id": "bukhari_1",
+  "section_id": "fb_1_1",
+  "page": 45,
+  "text": "...",
+  "relevance": 0.97
+}
+```
+
+---
+
+# 16.12 Evidence Types
+
+```text
+PRIMARY_HADITH
+SHARH
+CROSS_REFERENCE
+VARIANT
+NARRATOR
+LANGUAGE
+FIQH
+HISTORICAL
+SECONDARY
+```
+
+Tetapi dalam mode:
+
+```text
+ONLY_FATH_AL_BARI
+```
+
+hanya evidence yang berasal dari Fathul Bari yang boleh digunakan untuk klaim syarah.
+
+---
+
+# 16.13 Evidence Hierarchy
+
+Urutan prioritas:
+
+```text
+1. Direct Fathul Bari passage
+2. Fathul Bari cross-reference
+3. Hadith primary text
+4. Verified related narration
+5. Other classical source
+6. Modern secondary source
+7. Model knowledge
+```
+
+Untuk Research Mode:
+
+> **Model knowledge tidak boleh menjadi evidence.**
+
+---
+
+# 16.14 Evidence Window
+
+Jangan selalu mengambil satu chunk.
+
+Jika:
+
+```text
+Chunk 37
+```
+
+sangat relevan, ambil:
+
+```text
+Chunk 36
+Chunk 37
+Chunk 38
+```
+
+Kemudian lakukan context compression.
+
+---
+
+# 16.15 Contextual Compression
+
+Input:
+
+```text
+30 chunks
+```
+
+menjadi:
+
+```text
+8 evidence passages
+```
+
+Tetapi jangan melakukan compression secara lossy untuk kutipan sumber.
+
+Simpan:
+
+```text
+original evidence
+```
+
+dan:
+
+```text
+compressed evidence
+```
+
+---
+
+# 16.16 Evidence Matrix
+
+Research Mode menghasilkan:
+
+| Claim                                     | Evidence | Source      | Confidence |
+| ----------------------------------------- | -------- | ----------- | ---------: |
+| Niat berkaitan dengan maksud amal         | EV-001   | Fathul Bari |       0.97 |
+| Hadis berada pada awal Sahih Bukhari      | EV-002   | Bukhari     |       1.00 |
+| Ibnu Hajar membahas aspek bahasa tertentu | EV-003   | Fathul Bari |       0.91 |
+
+Ini menjadi dasar jawaban.
+
+---
+
+# 16.17 Claim Extraction
+
+Sebelum menghasilkan jawaban:
+
+```text
+Evidence
+ ↓
+Candidate Claims
+ ↓
+Claim Verification
+ ↓
+Answer
+```
+
+Contoh:
+
+```json
+{
+  "claim": "Ibnu Hajar mengaitkan nilai amal dengan niat pelakunya.",
+  "evidence": ["EV-001"],
+  "support": 0.96
+}
+```
+
+---
+
+# 16.18 Citation Enforcement
+
+Setiap klaim faktual penting harus memiliki evidence.
+
+```text
+Claim
+ ↓
+Citation?
+ ├── YES → validate
+ └── NO  → flag
+```
+
+Jika tidak ada evidence:
+
+```text
+UNSUPPORTED_CLAIM
+```
+
+---
+
+# 16.19 Citation Object
+
+Jangan hanya menyimpan:
+
+```text
+page = 45
+```
+
+Gunakan:
+
+```json
+{
+  "source_id": "FB-V1",
+  "volume": 1,
+  "page": 45,
+  "section_id": "FB-001",
+  "hadith_id": "B1",
+  "char_start": 320,
+  "char_end": 710
+}
+```
+
+Ini memungkinkan citation langsung membuka lokasi sumber.
+
+---
+
+# 16.20 Citation UI
+
+Jawaban:
+
+> Ibnu Hajar menjelaskan makna niat sebagai maksud yang menyertai amal. **[FB 1:45]**
+
+Klik:
+
+```text
+[FB 1:45]
+      ↓
+Source Viewer
+      ↓
+PDF page 45
+      ↓
+Highlight evidence
+```
+
+---
+
+# 16.21 Source Viewer Integration
+
+```text
+AI Answer
+   │
+   └── [FB 1:45]
+             │
+             ▼
+       Source Viewer
+             │
+       ┌─────┴─────┐
+       ▼           ▼
+   PDF Page     Extracted Text
+       │
+       ▼
+   Highlight
+```
+
+---
+
+# 16.22 Citation Validation
+
+Validator memeriksa:
+
+```text
+source exists?
+page exists?
+section exists?
+text exists?
+text supports claim?
+```
+
+Output:
+
+```json
+{
+  "valid": true,
+  "support_score": 0.94
+}
+```
+
+---
+
+# 16.23 Hallucination Firewall
+
+Sebelum LLM menjawab:
+
+```text
+NO EVIDENCE
+      │
+      ▼
+DO NOT CLAIM
+```
+
+Jika evidence hanya mendukung sebagian:
+
+```text
+SUPPORTED:
+"Fathul Bari membahas X."
+
+NOT SUPPORTED:
+"Fathul Bari menyatakan X adalah satu-satunya pendapat."
+```
+
+Model harus menghindari perluasan klaim.
+
+---
+
+# 16.24 Answer Generator
+
+Prompt internal harus memaksa struktur:
+
+```text
+ROLE
+SOURCE POLICY
+QUESTION
+EVIDENCE
+CLAIMS
+CITATION RULES
+OUTPUT FORMAT
+```
+
+Contoh template:
+
+```text
+Anda adalah Research Assistant Fathul Bari.
+
+Jawablah hanya berdasarkan evidence yang diberikan.
+
+Jangan:
+- mengarang sumber
+- membuat nomor halaman
+- mengatribusikan pendapat tanpa evidence
+- menggabungkan pendapat dari sumber berbeda tanpa label
+
+Setiap klaim utama harus memiliki citation.
+```
+
+---
+
+# 16.25 Source Isolation
+
+Untuk mode:
+
+```text
+FATH_AL_BARI_ONLY
+```
+
+context LLM:
+
+```text
+SYSTEM
++
+USER
++
+FATHUL_BARI_EVIDENCE
+```
+
+bukan:
+
+```text
+SYSTEM
++
+USER
++
+random retrieved knowledge
+```
+
+---
+
+# 16.26 Research Mode Output
+
+Format yang saya rekomendasikan:
+
+```markdown
+## Jawaban Singkat
+
+...
+
+## Hadis yang Dibahas
+
+...
+
+## Penjelasan Ibnu Hajar
+
+1. ...
+2. ...
+3. ...
+
+## Analisis
+
+...
+
+## Rujukan Silang
+
+...
+
+## Tingkat Kepastian
+
+Tinggi
+
+## Sumber
+
+- Fathul Bari, Jilid X, hlm. Y
+- Sahih Bukhari, Hadis X
+```
+
+---
+
+# 16.27 Confidence Levels
+
+Jangan hanya angka.
+
+Gunakan:
+
+```text
+VERY_HIGH
+HIGH
+MEDIUM
+LOW
+INSUFFICIENT
+```
+
+Contoh:
+
+```text
+Evidence Confidence: HIGH
+```
+
+---
+
+# 16.28 Confidence Breakdown
+
+UI:
+
+```text
+Evidence Confidence
+────────────────────────────
+
+Source quality       ██████████ 100%
+Match quality         █████████░  94%
+Context completeness  ████████░░  82%
+Citation validity     ██████████ 100%
+
+Overall                HIGH
+```
+
+---
+
+# 16.29 Contradiction Detection
+
+Jika dua evidence bertentangan:
+
+```text
+Evidence A
+   │
+   ├── says X
+   │
+Evidence B
+   │
+   └── says Y
+```
+
+jangan memaksa satu kesimpulan.
+
+Output:
+
+> "Terdapat perbedaan penjelasan pada dua bagian sumber. Berikut masing-masing posisi..."
+
+---
+
+# 16.30 Scholar Attribution
+
+Jika Ibnu Hajar mengutip:
+
+```text
+قال النووي
+قال الخطابي
+قال القرطبي
+```
+
+maka sistem harus membedakan:
+
+```text
+IBN_HAJAR_SAYS
+```
+
+dengan:
+
+```text
+IBN_HAJAR_QUOTES
+```
+
+Ini sangat penting.
+
+Contoh:
+
+```text
+Ibnu Hajar berkata:
+"...."
+
+Ibnu Hajar kemudian mengutip An-Nawawi:
+"...."
+```
+
+Jangan atribusikan kutipan kedua kepada Ibnu Hajar.
+
+---
+
+# 16.31 Attribution Graph
+
+```text
+Fathul Bari
+    │
+    ▼
+Ibn Hajar
+    │
+    ├── EXPLAINS
+    │
+    ├── QUOTES ─────► Al-Nawawi
+    │
+    ├── QUOTES ─────► Al-Khattabi
+    │
+    └── COMPARES ───► Other scholar
+```
+
+---
+
+# 16.32 Argument Structure
+
+Ini fitur yang akan membuat aplikasi kita jauh lebih kuat.
+
+Syarah panjang dapat dianalisis menjadi:
+
+```text
+CLAIM
+EVIDENCE
+EXPLANATION
+OBJECTION
+RESPONSE
+ALTERNATIVE
+PREFERENCE
+CONCLUSION
+```
+
+Contoh:
+
+```text
+Ibnu Hajar:
+  │
+  ├── Definition
+  ├── Linguistic explanation
+  ├── Scholarly opinion
+  ├── Objection
+  ├── Response
+  └── Preferred interpretation
+```
+
+---
+
+# 16.33 Syarah Reasoning Graph
+
+```text
+Hadith
+  │
+  ▼
+Question
+  │
+  ▼
+Ibn Hajar Explanation
+  │
+  ├──── Definition
+  │
+  ├──── Linguistic Evidence
+  │
+  ├──── Scholarly Opinion
+  │
+  ├──── Counterargument
+  │
+  └──── Conclusion
+```
+
+---
+
+# 16.34 Argument Extraction
+
+Database:
+
+```text
+sharh_arguments
+```
+
+Field:
+
+```text
+id
+section_id
+argument_type
+text
+supports_argument_id
+source_span
+confidence
+```
+
+Jenis:
+
+```text
+DEFINITION
+CLAIM
+EVIDENCE
+OPINION
+OBJECTION
+RESPONSE
+PREFERENCE
+CONCLUSION
+```
+
+---
+
+# 16.35 Deep Research Planner
+
+Research Mode dapat menghasilkan:
+
+```json
+{
+  "research_plan": [
+    "Identify hadith",
+    "Retrieve direct sharh",
+    "Retrieve cross-references",
+    "Identify quoted scholars",
+    "Compare variants",
+    "Construct argument structure",
+    "Validate citations",
+    "Generate synthesis"
+  ]
+}
+```
+
+---
+
+# 16.36 Multi-Hop Retrieval
+
+Pertanyaan:
+
+> "Bagaimana Ibnu Hajar menjelaskan hadis ini dan bagaimana beliau menghubungkannya dengan hadis lain?"
+
+Pipeline:
+
+```text
+Hadith A
+  │
+  ▼
+Sharh A
+  │
+  ▼
+Cross-reference
+  │
+  ▼
+Hadith B
+  │
+  ▼
+Sharh B
+  │
+  ▼
+Synthesis
+```
+
+Ini disebut:
+
+> **Multi-hop RAG**
+
+---
+
+# 16.37 Graph + RAG
+
+Kombinasi:
+
+```text
+Vector Search
+      +
+BM25
+      +
+Knowledge Graph
+      +
+Metadata
+```
+
+menjadi:
+
+```text
+Research Retrieval Engine
+```
+
+---
+
+# 16.38 Retrieval Strategy
+
+Urutan:
+
+```text
+1. Exact hadith
+2. Exact section
+3. Direct sharh
+4. Cross references
+5. Related hadith
+6. Quoted scholars
+7. Broader semantic context
+```
+
+Semakin jauh dari nomor 1:
+
+```text
+confidence ↓
+```
+
+---
+
+# 16.39 Evidence Budget
+
+LLM tidak perlu diberi 100 halaman.
+
+Gunakan budget:
+
+```text
+Direct evidence       5 passages
+Cross-reference       3 passages
+Variant evidence      2 passages
+Context               3 passages
+```
+
+Total:
+
+```text
+13 evidence units
+```
+
+Kemudian reranker memilih yang paling relevan.
+
+---
+
+# 16.40 Evidence Deduplication
+
+Masalah:
+
+```text
+Chunk A
+Chunk B
+Chunk C
+```
+
+ternyata mengandung teks yang sama.
+
+Deduplicate berdasarkan:
+
+```text
+text fingerprint
+section
+source span
+semantic similarity
+```
+
+---
+
+# 16.41 Source Priority
+
+Jika evidence yang sama berasal dari:
+
+```text
+OCR
+PDF text
+API
+```
+
+prioritas:
+
+```text
+Verified extracted text
+        ↓
+Native PDF text
+        ↓
+OCR
+        ↓
+Generated transcription
+```
+
+Namun semuanya tetap ditautkan ke sumber asal.
+
+---
+
+# 16.42 API Architecture
+
+Tambahkan:
+
+```http
+POST /api/v1/assistant/query
+```
+
+Request:
+
+```json
+{
+  "question": "Apa makna niat menurut Ibnu Hajar?",
+  "mode": "RESEARCH",
+  "source_scope": [
+    "FATH_AL_BARI"
+  ],
+  "language": "id"
+}
+```
+
+Response:
+
+```json
+{
+  "answer": "...",
+  "confidence": "HIGH",
+  "claims": [],
+  "citations": [],
+  "evidence": [],
+  "research_plan": []
+}
+```
+
+---
+
+# 16.43 Streaming Response
+
+Untuk UX:
+
+```text
+Researching...
+   ↓
+Identifying hadith...
+   ↓
+Searching Fathul Bari...
+   ↓
+Checking references...
+   ↓
+Validating evidence...
+   ↓
+Generating answer...
+```
+
+Kemudian streaming:
+
+```text
+Jawaban mulai muncul...
+```
+
+---
+
+# 16.44 Research Trace
+
+Untuk pengguna advanced:
+
+```text
+Research Trace
+
+Query
+ ↓
+Bukhari #1 identified
+ ↓
+7 Fathul Bari sections retrieved
+ ↓
+3 cross-references found
+ ↓
+12 evidence passages
+ ↓
+5 retained
+ ↓
+Citation validation passed
+```
+
+Ini membuat sistem **audit-friendly**.
+
+---
+
+# 16.45 Audit Trail
+
+Simpan:
+
+```text
+query
+query_normalized
+retrieval_strategy
+retrieved_documents
+reranking_scores
+selected_evidence
+prompt_version
+model_version
+answer
+citations
+validation_result
+timestamp
+```
+
+Dengan demikian setiap jawaban dapat direproduksi.
+
+---
+
+# 16.46 Prompt Versioning
+
+Jangan menyimpan hanya:
+
+```text
+prompt
+```
+
+Gunakan:
+
+```text
+prompt_template_id
+prompt_version
+model
+retrieval_version
+```
+
+Contoh:
+
+```json
+{
+  "prompt_version": "syarah-research-v1.3",
+  "model": "production-model",
+  "retrieval_version": "hybrid-rag-v2.1"
+}
+```
+
+---
+
+# 16.47 AI Answer Audit
+
+Admin dapat melihat:
+
+```text
+ANSWER #9281
+
+Question
+...
+
+Evidence
+EV-001
+EV-002
+EV-005
+
+Claims
+3
+
+Supported
+3
+
+Unsupported
+0
+
+Citation validity
+100%
+
+Model
+...
+
+Prompt
+...
+```
+
+---
+
+# 16.48 Anti-Hallucination Rules
+
+Minimal:
+
+```text
+RULE 01
+Never invent citation.
+
+RULE 02
+Never invent page number.
+
+RULE 03
+Never attribute scholar without evidence.
+
+RULE 04
+Never convert possibility into certainty.
+
+RULE 05
+Never merge two different narrations silently.
+
+RULE 06
+Never state "Ibnu Hajar berkata" without source evidence.
+
+RULE 07
+When evidence is insufficient, say so.
+
+RULE 08
+Separate source quotation from AI synthesis.
+```
+
+---
+
+# 16.49 Jawaban dengan Evidence Insufficient
+
+Contoh:
+
+> **Belum cukup bukti.** Saya menemukan beberapa bagian Fathul Bari yang berkaitan dengan tema tersebut, tetapi belum menemukan passage yang cukup kuat untuk memastikan bahwa kesimpulan X memang merupakan pendapat Ibnu Hajar. Saya tidak akan menyimpulkannya sebagai pendapat beliau tanpa sumber yang lebih kuat.
+
+Ini fitur yang sangat penting untuk aplikasi ilmiah.
+
+---
+
+# 16.50 Source-grounded Translation
+
+Kita juga dapat menambahkan:
+
+```text
+Arabic
+ ↓
+Translation
+ ↓
+Citation
+```
+
+Tetapi:
+
+> Terjemahan AI harus dianggap **terjemahan**, bukan teks sumber.
+
+UI:
+
+```text
+النص العربي
+        │
+        ▼
+Terjemahan Indonesia
+        │
+        ▼
+[AI Translation]
+```
+
+---
+
+# 16.51 Dual View
+
+Researcher dapat memilih:
+
+```text
+┌──────────────────────┬─────────────────────────┐
+│ ARABIC               │ INDONESIAN              │
+├──────────────────────┼─────────────────────────┤
+│ قال الحافظ...        │ Al-Hafizh menjelaskan…  │
+│ ...                  │ ...                     │
+└──────────────────────┴─────────────────────────┘
+```
+
+Klik kalimat Indonesia:
+
+```text
+→ highlight Arabic source
+```
+
+---
+
+# 16.52 Research Workspace
+
+Dashboard utama:
+
+```text
+┌───────────────────────────────────────────────────────────┐
+│ FATHUL BARI RESEARCH ASSISTANT                           │
+├───────────────────────────────────────────────────────────┤
+│ Search / Ask                                              │
+│ [ Apa penjelasan Ibnu Hajar tentang niat? ]              │
+├───────────────────────────────────────────────────────────┤
+│ Mode: ○ Ringkas ○ Mendalam ● Research                    │
+│ Source: [Fathul Bari]                                    │
+├───────────────────────────────────────────────────────────┤
+│ ANSWER                                                    │
+│                                                           │
+│ ...                                                       │
+│                                                           │
+├───────────────────────────────────────────────────────────┤
+│ EVIDENCE                                                  │
+│                                                           │
+│ [FB Vol.1 p.45] [FB Vol.1 p.46]                         │
+├───────────────────────────────────────────────────────────┤
+│ RESEARCH TRACE                                            │
+│                                                           │
+│ Hadith identified ✓                                      │
+│ Sharh retrieved ✓                                        │
+│ Cross-reference ✓                                        │
+│ Citation validated ✓                                     │
+└───────────────────────────────────────────────────────────┘
+```
+
+---
+
+# 16.53 Data Model
+
+Tambahkan:
+
+```text
+research_queries
+research_runs
+research_plans
+
+evidence_units
+evidence_claims
+claim_citations
+
+answer_versions
+answer_citations
+
+argument_nodes
+argument_edges
+
+prompt_versions
+model_versions
+
+citation_validations
+research_traces
+```
+
+---
+
+# 16.54 Research Run
+
+```json
+{
+  "id": "RUN-0009281",
+  "query": "...",
+  "mode": "RESEARCH",
+  "source_scope": ["FATH_AL_BARI"],
+  "started_at": "...",
+  "status": "COMPLETED"
+}
+```
+
+---
+
+# 16.55 Evidence Unit
+
+```json
+{
+  "id": "EV-001",
+  "run_id": "RUN-0009281",
+  "source": "FATH_AL_BARI",
+  "volume": 1,
+  "page": 45,
+  "section": "FB-001",
+  "text": "...",
+  "relevance": 0.97
+}
+```
+
+---
+
+# 16.56 Claim
+
+```json
+{
+  "id": "CL-001",
+  "run_id": "RUN-0009281",
+  "text": "Ibnu Hajar menjelaskan...",
+  "evidence_ids": ["EV-001"],
+  "support_score": 0.95
+}
+```
+
+---
+
+# 16.57 Citation
+
+```json
+{
+  "claim_id": "CL-001",
+  "source_id": "FB-V1",
+  "page": 45,
+  "section_id": "FB-001",
+  "validated": true
+}
+```
+
+---
+
+# 16.58 Folder Architecture
+
+```text
+backend/
+└── app/
+    ├── assistant/
+    │   ├── query_analyzer.py
+    │   ├── query_planner.py
+    │   ├── research_agent.py
+    │   ├── evidence_builder.py
+    │   ├── claim_extractor.py
+    │   ├── citation_guard.py
+    │   ├── answer_generator.py
+    │   └── confidence.py
+    │
+    ├── retrieval/
+    │   ├── exact.py
+    │   ├── bm25.py
+    │   ├── vector.py
+    │   ├── graph.py
+    │   ├── hybrid.py
+    │   └── reranker.py
+    │
+    ├── reasoning/
+    │   ├── argument_extractor.py
+    │   ├── attribution.py
+    │   ├── contradiction.py
+    │   └── synthesis.py
+    │
+    └── citations/
+        ├── resolver.py
+        ├── validator.py
+        └── formatter.py
+```
+
+---
+
+# 16.59 Testing Strategy
+
+Kita perlu empat jenis test.
+
+### Unit Test
+
+```text
+Arabic normalization
+Hadith extraction
+Citation resolver
+```
+
+### Retrieval Test
+
+```text
+Recall@5
+MRR
+NDCG
+```
+
+### Grounding Test
+
+```text
+Claim → Evidence
+```
+
+### End-to-End Test
+
+```text
+Question
+ ↓
+Research
+ ↓
+Answer
+ ↓
+Citation
+```
+
+---
+
+# 16.60 Research Quality Score
+
+Buat skor internal:
+
+```text
+Research Quality
+=
+Retrieval Quality
++
+Evidence Coverage
++
+Citation Validity
++
+Attribution Accuracy
++
+Answer Grounding
+```
+
+Jangan jadikan satu angka sebagai pengganti evaluasi detail; tampilkan breakdown-nya.
+
+---
+
+# 16.61 Definition of Done — Stage 16
+
+```text
+[ ] Query analyzer
+[ ] Intent classifier
+[ ] Source constraint engine
+[ ] Query planner
+[ ] Multi-query retrieval
+[ ] Hybrid retrieval
+[ ] Graph retrieval
+[ ] Evidence builder
+[ ] Contextual compression
+[ ] Evidence deduplication
+[ ] Claim extraction
+[ ] Claim-evidence mapping
+[ ] Citation enforcement
+[ ] Citation validator
+[ ] Hallucination firewall
+[ ] Scholar attribution
+[ ] Argument extraction
+[ ] Multi-hop retrieval
+[ ] Research planner
+[ ] Research trace
+[ ] Prompt versioning
+[ ] Model versioning
+[ ] Research workspace
+[ ] Research Mode
+[ ] Syarah Mendalam Mode
+[ ] Ringkas Mode
+[ ] Grounding tests
+```
+
+---
+
+# 16.62 Arsitektur Lengkap sampai Stage 16
+
+```text
+                         USER
+                          │
+                          ▼
+                 ┌─────────────────┐
+                 │ RESEARCH UI     │
+                 └────────┬────────┘
+                          ▼
+                 ┌─────────────────┐
+                 │ QUERY ANALYZER  │
+                 └────────┬────────┘
+                          ▼
+                 ┌─────────────────┐
+                 │ QUERY PLANNER   │
+                 └────────┬────────┘
+                          │
+          ┌───────────────┼────────────────┐
+          ▼               ▼                ▼
+       EXACT            BM25             VECTOR
+          │               │                │
+          └───────────────┼────────────────┘
+                          ▼
+                    GRAPH SEARCH
+                          │
+                          ▼
+                    RERANKER
+                          │
+                          ▼
+                ┌──────────────────┐
+                │ EVIDENCE BUILDER │
+                └────────┬─────────┘
+                         ▼
+                  CLAIM EXTRACTOR
+                         │
+                         ▼
+                ARGUMENT STRUCTURE
+                         │
+                         ▼
+                 REASONING ENGINE
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ ANSWER GENERATOR │
+                └────────┬─────────┘
+                         ▼
+                ┌──────────────────┐
+                │ CITATION GUARD   │
+                └────────┬─────────┘
+                         ▼
+                ┌──────────────────┐
+                │ SOURCE VALIDATOR │
+                └────────┬─────────┘
+                         ▼
+                       ANSWER
+                         │
+              ┌──────────┼──────────┐
+              ▼          ▼          ▼
+           Citation    Evidence    Trace
+              │          │          │
+              ▼          ▼          ▼
+          Source PDF  Research KG  Audit
+```
+
+---
+
+## Posisi proyek setelah Stage 16
+
+```text
+FOUNDATION
+     │
+     ▼
+AHMAD SANUSI HADITH API
+     │
+     ▼
+FATHUL BARI CORPUS
+     │
+     ▼
+CORPUS PROCESSING
+     │
+     ▼
+ARABIC NLP
+     │
+     ▼
+ADVANCED HADITH MATCHING
+     │
+     ▼
+KNOWLEDGE GRAPH
+     │
+     ▼
+HYBRID RAG
+     │
+     ▼
+RESEARCH-GRADE RAG
+     │
+     ▼
+CITATION + AUDIT
+     │
+     ▼
+┌──────────────────────────────┐
+│ FATHUL BARI RESEARCH AI      │
+│                              │
+│  Ringkas                     │
+│  Syarah Mendalam             │
+│  Research Mode               │
+└──────────────────────────────┘
+```

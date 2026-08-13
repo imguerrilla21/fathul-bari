@@ -1,0 +1,45 @@
+{
+  "session_id": "347c94d2-9753-4153-b7c7-9d370f537cec",
+  "intent": "SHARH_LOOKUP",
+  "status": "COMPLETED",
+  "answer": {
+    "title": "Penjelasan Hadis Niat",
+    "summary": "Ibn Hajar menjelaskan bahwa niat adalah syarat mutlak dalam sahnya suatu amalan menurut mayoritas ulama.",
+    "sections": [
+      {
+        "title": "Ringkasan",
+        "content": "Hadis ini merupakan salah satu pilar Islam. Ibn Hajar mengutip para ulama yang mengatakan hadis ini mencakup sepertiga ilmu [1].",
+        "claims": [
+          {
+            "claim": "Hadis niat mencakup sepertiga ilmu",
+            "evidence_ids": [
+              "ev_mock_1"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Penjelasan Ibn Hajar",
+        "content": "Kata 'النيات' adalah bentuk jamak dari 'نية'. Ibn Hajar merinci perdebatan ulama terkait apakah niat adalah rukun atau syarat [2].",
+        "claims": [
+          {
+            "claim": "Perdebatan ulama tentang rukun atau syarat",
+            "evidence_ids": [
+              "ev_mock_2"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "id": "ev_mock_1",
+      "text": "إنما الأعمال بالنيات"
+    },
+    {
+      "id": "ev_mock_2",
+      "text": "Kata Niyyat adalah bentuk jamak dari Niyyah..."
+    }
+  ]
+}

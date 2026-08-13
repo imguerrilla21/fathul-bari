@@ -1,0 +1,193 @@
+{
+  "tokens": [
+    {
+      "surface": "حدثنا",
+      "normalized": "حدثنا",
+      "start_char": 0,
+      "end_char": 5,
+      "lemma": "حدثنا"
+    },
+    {
+      "surface": "مالك",
+      "normalized": "مالك",
+      "start_char": 6,
+      "end_char": 10,
+      "lemma": "مالك"
+    },
+    {
+      "surface": "قال",
+      "normalized": "قال",
+      "start_char": 11,
+      "end_char": 14,
+      "lemma": "قال"
+    },
+    {
+      "surface": "سمعت",
+      "normalized": "سمعت",
+      "start_char": 15,
+      "end_char": 19,
+      "lemma": "سمعت"
+    },
+    {
+      "surface": "رسول",
+      "normalized": "رسول",
+      "start_char": 20,
+      "end_char": 24,
+      "lemma": "رسول"
+    },
+    {
+      "surface": "الله",
+      "normalized": "الله",
+      "start_char": 25,
+      "end_char": 29,
+      "lemma": "الله"
+    },
+    {
+      "surface": "صلى",
+      "normalized": "صلي",
+      "start_char": 30,
+      "end_char": 33,
+      "lemma": "صلي"
+    },
+    {
+      "surface": "الله",
+      "normalized": "الله",
+      "start_char": 34,
+      "end_char": 38,
+      "lemma": "الله"
+    },
+    {
+      "surface": "عليه",
+      "normalized": "عليه",
+      "start_char": 39,
+      "end_char": 43,
+      "lemma": "عليه"
+    },
+    {
+      "surface": "وسلم",
+      "normalized": "وسلم",
+      "start_char": 44,
+      "end_char": 48,
+      "lemma": "وسلم"
+    },
+    {
+      "surface": "يقول",
+      "normalized": "يقول",
+      "start_char": 49,
+      "end_char": 53,
+      "lemma": "يقول"
+    },
+    {
+      "surface": "إنما",
+      "normalized": "انما",
+      "start_char": 54,
+      "end_char": 58,
+      "lemma": "انما"
+    },
+    {
+      "surface": "الأعمال",
+      "normalized": "الاعمال",
+      "start_char": 59,
+      "end_char": 66,
+      "lemma": "عمل",
+      "root": "ع م ل"
+    },
+    {
+      "surface": "بالنيات",
+      "normalized": "بالنيات",
+      "start_char": 67,
+      "end_char": 74,
+      "lemma": "نية",
+      "root": "ن و ي"
+    },
+    {
+      "surface": "وإنما",
+      "normalized": "وانما",
+      "start_char": 75,
+      "end_char": 80,
+      "lemma": "وانما"
+    },
+    {
+      "surface": "لكل",
+      "normalized": "لكل",
+      "start_char": 81,
+      "end_char": 84,
+      "lemma": "لكل"
+    },
+    {
+      "surface": "امرئ",
+      "normalized": "امرء",
+      "start_char": 85,
+      "end_char": 89,
+      "lemma": "امرء"
+    },
+    {
+      "surface": "ما",
+      "normalized": "ما",
+      "start_char": 90,
+      "end_char": 92,
+      "lemma": "ما"
+    },
+    {
+      "surface": "نوى",
+      "normalized": "نوي",
+      "start_char": 93,
+      "end_char": 96,
+      "lemma": "نوي"
+    },
+    {
+      "surface": "وهذا",
+      "normalized": "وهذا",
+      "start_char": 97,
+      "end_char": 101,
+      "lemma": "وهذا"
+    },
+    {
+      "surface": "حديث",
+      "normalized": "حديث",
+      "start_char": 102,
+      "end_char": 106,
+      "lemma": "حديث"
+    },
+    {
+      "surface": "صحيح",
+      "normalized": "صحيح",
+      "start_char": 107,
+      "end_char": 111,
+      "lemma": "صحيح"
+    }
+  ],
+  "entities": {
+    "narrators": [
+      {
+        "surface": "مالك قال سمعت",
+        "trigger": "حدثنا",
+        "start_char": 6,
+        "end_char": 19,
+        "entity_type": "NARRATOR_CANDIDATE"
+      },
+      {
+        "surface": "سمعت رسول الله",
+        "trigger": "قال",
+        "start_char": 15,
+        "end_char": 29,
+        "entity_type": "NARRATOR_CANDIDATE"
+      },
+      {
+        "surface": "رسول الله صلى",
+        "trigger": "سمعت",
+        "start_char": 20,
+        "end_char": 33,
+        "entity_type": "NARRATOR_CANDIDATE"
+      }
+    ],
+    "terms": [
+      {
+        "surface": "صحيح",
+        "start_char": 107,
+        "end_char": 111,
+        "entity_type": "TERM_MENTION"
+      }
+    ]
+  }
+}

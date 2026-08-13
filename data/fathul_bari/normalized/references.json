@@ -1,0 +1,518 @@
+[
+  {
+    "volume": 1,
+    "page": 9,
+    "references": [
+      {
+        "hadith_number": 1,
+        "matched_text": "حَدِيثُ 1",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 1",
+          "number": 1
+        }
+      }
+    ]
+  },
+  {
+    "volume": 1,
+    "page": 24,
+    "references": [
+      {
+        "hadith_number": 2,
+        "matched_text": "حَدِيثُ 2",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 2",
+          "number": 2
+        }
+      }
+    ]
+  },
+  {
+    "volume": 1,
+    "page": 35,
+    "references": [
+      {
+        "hadith_number": 3,
+        "matched_text": "حَدِيثُ 3",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 3",
+          "number": 3
+        }
+      }
+    ]
+  },
+  {
+    "volume": 1,
+    "page": 42,
+    "references": [
+      {
+        "hadith_number": 4,
+        "matched_text": "حَدِيثُ 4",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 4",
+          "number": 4
+        }
+      }
+    ]
+  },
+  {
+    "volume": 1,
+    "page": 48,
+    "references": [
+      {
+        "hadith_number": 5,
+        "matched_text": "حَدِيثُ 5",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 5",
+          "number": 5
+        }
+      },
+      {
+        "hadith_number": null,
+        "matched_text": "ابن عباس",
+        "reference_type": "sahabah_mention",
+        "confidence": 0.5,
+        "evidence": {
+          "sahabah_name": "ابن عباس"
+        }
+      }
+    ]
+  },
+  {
+    "volume": 1,
+    "page": 60,
+    "references": [
+      {
+        "hadith_number": 8,
+        "matched_text": "حَدِيثُ 8",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 8",
+          "number": 8
+        }
+      },
+      {
+        "hadith_number": null,
+        "matched_text": "ابن عمر",
+        "reference_type": "sahabah_mention",
+        "confidence": 0.5,
+        "evidence": {
+          "sahabah_name": "ابن عمر"
+        }
+      }
+    ]
+  },
+  {
+    "volume": 1,
+    "page": 72,
+    "references": [
+      {
+        "hadith_number": 9,
+        "matched_text": "حَدِيثُ 9",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 9",
+          "number": 9
+        }
+      },
+      {
+        "hadith_number": null,
+        "matched_text": "أبو هريرة",
+        "reference_type": "sahabah_mention",
+        "confidence": 0.5,
+        "evidence": {
+          "sahabah_name": "أبو هريرة"
+        }
+      }
+    ]
+  },
+  {
+    "volume": 2,
+    "page": 120,
+    "references": [
+      {
+        "hadith_number": 59,
+        "matched_text": "حَدِيثُ 59",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 59",
+          "number": 59
+        }
+      }
+    ]
+  },
+  {
+    "volume": 2,
+    "page": 125,
+    "references": [
+      {
+        "hadith_number": 60,
+        "matched_text": "حَدِيثُ 60",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 60",
+          "number": 60
+        }
+      }
+    ]
+  },
+  {
+    "volume": 2,
+    "page": 140,
+    "references": [
+      {
+        "hadith_number": 68,
+        "matched_text": "حَدِيثُ 68",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 68",
+          "number": 68
+        }
+      }
+    ]
+  },
+  {
+    "volume": 3,
+    "page": 210,
+    "references": [
+      {
+        "hadith_number": 135,
+        "matched_text": "حَدِيثُ 135",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 135",
+          "number": 135
+        }
+      },
+      {
+        "hadith_number": null,
+        "matched_text": "أبو هريرة",
+        "reference_type": "sahabah_mention",
+        "confidence": 0.5,
+        "evidence": {
+          "sahabah_name": "أبو هريرة"
+        }
+      }
+    ]
+  },
+  {
+    "volume": 3,
+    "page": 235,
+    "references": [
+      {
+        "hadith_number": 645,
+        "matched_text": "حَدِيثُ 645",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 645",
+          "number": 645
+        }
+      },
+      {
+        "hadith_number": null,
+        "matched_text": "أبو هريرة",
+        "reference_type": "sahabah_mention",
+        "confidence": 0.5,
+        "evidence": {
+          "sahabah_name": "أبو هريرة"
+        }
+      }
+    ]
+  },
+  {
+    "volume": 4,
+    "page": 305,
+    "references": [
+      {
+        "hadith_number": 1395,
+        "matched_text": "حَدِيثُ 1395",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 1395",
+          "number": 1395
+        }
+      },
+      {
+        "hadith_number": null,
+        "matched_text": "ابن عباس",
+        "reference_type": "sahabah_mention",
+        "confidence": 0.5,
+        "evidence": {
+          "sahabah_name": "ابن عباس"
+        }
+      }
+    ]
+  },
+  {
+    "volume": 4,
+    "page": 350,
+    "references": [
+      {
+        "hadith_number": 2079,
+        "matched_text": "حَدِيثُ 2079",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 2079",
+          "number": 2079
+        }
+      }
+    ]
+  },
+  {
+    "volume": 5,
+    "page": 10,
+    "references": [
+      {
+        "hadith_number": 1891,
+        "matched_text": "حَدِيثُ 1891",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 1891",
+          "number": 1891
+        }
+      },
+      {
+        "hadith_number": null,
+        "matched_text": "أبو هريرة",
+        "reference_type": "sahabah_mention",
+        "confidence": 0.5,
+        "evidence": {
+          "sahabah_name": "أبو هريرة"
+        }
+      }
+    ]
+  },
+  {
+    "volume": 5,
+    "page": 28,
+    "references": [
+      {
+        "hadith_number": 1897,
+        "matched_text": "حَدِيثُ 1897",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 1897",
+          "number": 1897
+        }
+      }
+    ]
+  },
+  {
+    "volume": 6,
+    "page": 15,
+    "references": [
+      {
+        "hadith_number": 1513,
+        "matched_text": "حَدِيثُ 1513",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 1513",
+          "number": 1513
+        }
+      },
+      {
+        "hadith_number": null,
+        "matched_text": "أبو هريرة",
+        "reference_type": "sahabah_mention",
+        "confidence": 0.5,
+        "evidence": {
+          "sahabah_name": "أبو هريرة"
+        }
+      }
+    ]
+  },
+  {
+    "volume": 7,
+    "page": 45,
+    "references": [
+      {
+        "hadith_number": 2240,
+        "matched_text": "حَدِيثُ 2240",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 2240",
+          "number": 2240
+        }
+      },
+      {
+        "hadith_number": null,
+        "matched_text": "ابن عباس",
+        "reference_type": "sahabah_mention",
+        "confidence": 0.5,
+        "evidence": {
+          "sahabah_name": "ابن عباس"
+        }
+      }
+    ]
+  },
+  {
+    "volume": 8,
+    "page": 18,
+    "references": [
+      {
+        "hadith_number": 2782,
+        "matched_text": "حَدِيثُ 2782",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 2782",
+          "number": 2782
+        }
+      }
+    ]
+  },
+  {
+    "volume": 11,
+    "page": 10,
+    "references": [
+      {
+        "hadith_number": 5065,
+        "matched_text": "حَدِيثُ 5065",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 5065",
+          "number": 5065
+        }
+      }
+    ]
+  },
+  {
+    "volume": 12,
+    "page": 145,
+    "references": [
+      {
+        "hadith_number": 5688,
+        "matched_text": "حَدِيثُ 5688",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 5688",
+          "number": 5688
+        }
+      },
+      {
+        "hadith_number": null,
+        "matched_text": "\"مِنْ كُلِّ دَاءٍ\" هُوَ مِنَ الْعَامِّ الَّذِي يُرَادُ بِهِ الْخَاصُّ، أَيْ مِنْ كُلِّ دَاءٍ يَقْبَلُ الْعِلاجَ بِهَا مِنَ الأَمْرَاضِ الْبَارِدَةِ وَالرَّطْبَةِ، وَلَيْسَ الْمُرَادُ أَنَّهَا تَشْفِي جَمِيعَ الأَمْرَاضِ عَلَى الإِطْلاقِ، فَقَدْ جَرَتْ سُنَّةُ اللَّهِ فِي خَلْقِهِ أَنَّ لِكُلِّ دَاءٍ دَوَاءً يُنَاسِبُهُ",
+        "reference_type": "quote_statement",
+        "confidence": 0.8,
+        "evidence": {
+          "quote_raw": "\"مِنْ كُلِّ دَاءٍ\" هُوَ مِنَ الْعَامِّ الَّذِي يُرَادُ بِهِ الْخَاصُّ، أَيْ مِنْ كُلِّ دَاءٍ يَقْبَلُ الْعِلاجَ بِهَا مِنَ الأَمْرَاضِ الْبَارِدَةِ وَالرَّطْبَةِ، وَلَيْسَ الْمُرَادُ أَنَّهَا تَشْفِي جَمِيعَ الأَمْرَاضِ عَلَى الإِطْلاقِ، فَقَدْ جَرَتْ سُنَّةُ اللَّهِ فِي خَلْقِهِ أَنَّ لِكُلِّ دَاءٍ دَوَاءً يُنَاسِبُهُ",
+          "quote_normalized": "من كل داء هو من العام الذي يراد به الخاص اي من كل داء يقبل العلاج بها من الامراض الباردة والرطبة وليس المراد انها تشفي جميع الامراض علي الاطلاق فقد جرت سنة الله في خلقه ان لكل داء دواء يناسبه",
+          "pattern": "قَوْلُهُ\\s+([^\\.\\,\\;\\:\\n]+)"
+        }
+      },
+      {
+        "hadith_number": null,
+        "matched_text": "أبو هريرة",
+        "reference_type": "sahabah_mention",
+        "confidence": 0.5,
+        "evidence": {
+          "sahabah_name": "أبو هريرة"
+        }
+      }
+    ]
+  },
+  {
+    "volume": 12,
+    "page": 260,
+    "references": [
+      {
+        "hadith_number": 6094,
+        "matched_text": "حَدِيثُ 6094",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 6094",
+          "number": 6094
+        }
+      }
+    ]
+  },
+  {
+    "volume": 13,
+    "page": 220,
+    "references": [
+      {
+        "hadith_number": 6412,
+        "matched_text": "حَدِيثُ 6412",
+        "reference_type": "explicit_number",
+        "confidence": 0.95,
+        "evidence": {
+          "pattern": "حَدِيثُ?\\s*(?:رَقْمُ?)?\\s*(\\d+)",
+          "raw_match": "حَدِيثُ 6412",
+          "number": 6412
+        }
+      },
+      {
+        "hadith_number": null,
+        "matched_text": "ابن عباس",
+        "reference_type": "sahabah_mention",
+        "confidence": 0.5,
+        "evidence": {
+          "sahabah_name": "ابن عباس"
+        }
+      }
+    ]
+  },
+  {
+    "volume": 13,
+    "page": 530,
+    "references": [
+      {
+        "hadith_number": null,
+        "matched_text": "أبو هريرة",
+        "reference_type": "sahabah_mention",
+        "confidence": 0.5,
+        "evidence": {
+          "sahabah_name": "أبو هريرة"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #05130e;
+    --bg-surface: #0b221a;
+    --bg-card: #0f2c22;
+    --bg-card-hover: #14382c;
+    --bg-input: #081a13;
+    --border-color: #1a4a39;
+    --border-focus: #10b981;
+
+    --text-main: #ecfdf5;
+    --text-muted: #94a3b8;
+    --text-sub: #6ee7b7;
+
+    --accent-gold: #f59e0b;
+    --accent-gold-light: #fef3c7;
+    --accent-emerald: #10b981;
+    --accent-emerald-dark: #047857;
+    --accent-blue: #38bdf8;
+    --accent-rose: #f43f5e;
+  }
+
+  [data-theme="light"] {
+    --bg-main: #f4f8f6;
+    --bg-surface: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0f7f4;
+    --bg-input: #f8fafc;
+    --border-color: #d1e2db;
+    --border-focus: #059669;
+
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --text-sub: #047857;
+
+    --accent-gold: #d97706;
+    --accent-gold-light: #fffbeb;
+    --accent-emerald: #059669;
+    --accent-emerald-dark: #065f46;
+    --accent-blue: #0284c7;
+    --accent-rose: #e11d48;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.25s ease, color 0.2s ease, border-color 0.25s ease;
+  }
+}
+
+.font-arabic {
+  font-family: 'Amiri', 'Scheherazade New', serif;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-input);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-emerald);
+}
+
+/* Keyframes & Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.animate-pulse-dot {
+  animation: pulseGlow 2s infinite;
+}

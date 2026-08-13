@@ -1,0 +1,3444 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fathul Bari Research — Riset Hadis Shahih Bukhari & Syarah Fathul Bari</title>
+  <meta name="description" content="Platform riset dan studi hadis Shahih al-Bukhari terintegrasi dengan Syarah Fathul Bari karya Ibnu Hajar al-Asqalani. Tahap 5 Review Dashboard.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-ui: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-arabic: 'Amiri', 'Scheherazade New', serif;
+      
+      /* Dark Theme */
+      --bg-main: #05130e;
+      --bg-surface: #0b221a;
+      --bg-card: #0f2c22;
+      --bg-card-hover: #14382c;
+      --bg-input: #081a13;
+      --border-color: #1a4a39;
+      --border-focus: #10b981;
+      
+      --text-main: #ecfdf5;
+      --text-muted: #94a3b8;
+      --text-sub: #6ee7b7;
+      
+      --accent-gold: #f59e0b;
+      --accent-gold-light: #fef3c7;
+      --accent-emerald: #10b981;
+      --accent-emerald-dark: #047857;
+      --accent-blue: #38bdf8;
+      --accent-rose: #f43f5e;
+      
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
+      --shadow-lg: 0 10px 30px rgba(0,0,0,0.6);
+      --shadow-glow: 0 0 25px rgba(16, 185, 129, 0.15);
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      
+      --arabic-font-size: 28px;
+    }
+
+    [data-theme="light"] {
+      --bg-main: #f4f8f6;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0f7f4;
+      --bg-input: #f8fafc;
+      --border-color: #d1e2db;
+      --border-focus: #059669;
+      
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-sub: #047857;
+      
+      --accent-gold: #d97706;
+      --accent-gold-light: #fffbeb;
+      --accent-emerald: #059669;
+      --accent-emerald-dark: #065f46;
+      --accent-blue: #0284c7;
+      --accent-rose: #e11d48;
+      
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.08);
+      --shadow-glow: 0 0 20px rgba(5, 150, 105, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    /* Header */
+    header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--accent-emerald) 0%, #064e3b 100%);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 20px;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .logo-text h1 {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-badge {
+      font-size: 10px;
+      font-weight: 700;
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--accent-gold);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .logo-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: -2px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-emerald);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .theme-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .theme-btn:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-emerald);
+    }
+
+    /* Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: var(--bg-card-hover);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--accent-emerald-dark), var(--accent-emerald));
+      color: #ffffff;
+      border-color: var(--accent-emerald);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+    .tab-pane.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input, select, textarea {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 11px 16px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      width: 100%;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    .btn {
+      background: var(--accent-emerald);
+      color: #fff;
+      border: none;
+      padding: 11px 20px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #0d9468;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-secondary {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+    .btn-secondary:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-focus);
+      box-shadow: none;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      color: #ffffff;
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #b45309, #d97706);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #be123c, #f43f5e);
+      color: #ffffff;
+    }
+    .btn-danger:hover {
+      background: linear-gradient(135deg, #9f1239, #e11d48);
+      box-shadow: 0 4px 14px rgba(244, 63, 94, 0.4);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #047857, #10b981);
+      color: #ffffff;
+    }
+    .btn-success:hover {
+      background: linear-gradient(135deg, #065f46, #059669);
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-sm {
+      padding: 6px 14px;
+      font-size: 13px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Badges & Pills */
+    .hadith-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: var(--accent-gold);
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .confidence-badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-auto {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .badge-review {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-gold);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .badge-verified {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-blue);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+    .badge-rejected {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+    }
+    .badge-weak {
+      background: rgba(148, 163, 184, 0.15);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    /* Hadith Viewer UI */
+    .hadith-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: var(--bg-surface);
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .quick-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .chip:hover, .chip.active {
+      border-color: var(--accent-emerald);
+      color: var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .hadith-card {
+      position: relative;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hadith-meta-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hadith-arabic {
+      font-family: var(--font-arabic);
+      font-size: var(--arabic-font-size);
+      line-height: 2.2;
+      direction: rtl;
+      text-align: right;
+      color: var(--text-main);
+      padding: 24px 18px;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: var(--radius-md);
+      margin-bottom: 24px;
+      border-right: 4px solid var(--accent-gold);
+    }
+
+    [data-theme="light"] .hadith-arabic {
+      background: #f8fbf9;
+    }
+
+    .hadith-translation {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-main);
+      margin-bottom: 24px;
+    }
+
+    .hadith-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Syarah Box in Reader */
+    .syarah-box {
+      margin-top: 24px;
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+
+    .syarah-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .syarah-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .syarah-content {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed rgba(245, 158, 11, 0.3);
+    }
+
+    .syarah-arabic {
+      font-family: var(--font-arabic);
+      font-size: 22px;
+      line-height: 2.1;
+      direction: rtl;
+      text-align: right;
+      margin-bottom: 16px;
+      color: #fde68a;
+    }
+
+    [data-theme="light"] .syarah-arabic {
+      color: #92400e;
+    }
+
+    .syarah-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-main);
+    }
+
+    /* Search Tab */
+    .search-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .search-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      cursor: pointer;
+    }
+    .search-item:hover {
+      border-color: var(--accent-emerald);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .highlight {
+      background: rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      padding: 0 4px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-emerald), var(--accent-gold));
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .stat-sub {
+      font-size: 12px;
+      color: var(--accent-emerald);
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-input);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-emerald), var(--accent-gold));
+      border-radius: var(--radius-full);
+      transition: width 0.4s ease;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: var(--bg-surface);
+      padding: 12px 16px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--bg-card-hover);
+    }
+
+    /* ========================================================================= */
+    /* TAHAP 5 REVIEW DASHBOARD STYLES                                           */
+    /* ========================================================================= */
+    .review-workflow-banner {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(245, 158, 11, 0.08) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 18px 24px;
+      margin-bottom: 20px;
+    }
+
+    .workflow-steps {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .workflow-step-pill {
+      font-size: 12px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .review-layout-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .review-layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Left Sidebar: Queue List */
+    .queue-sidebar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 96px;
+      max-height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .queue-list-container {
+      overflow-y: auto;
+      margin-top: 12px;
+      padding-right: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .queue-card-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .queue-card-item:hover {
+      border-color: var(--border-focus);
+      background: var(--bg-card-hover);
+      transform: translateX(2px);
+    }
+
+    .queue-card-item.active {
+      border-color: var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.1);
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+    }
+
+    .queue-card-item.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--accent-emerald);
+      border-radius: 4px 0 0 4px;
+    }
+
+    .queue-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .queue-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.4;
+      margin-bottom: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .queue-card-snippet {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Right Workspace: Inspector & Action */
+    .review-workspace {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .section-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .section-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .section-box-title {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Evidence Breakdown Grid */
+    .signals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .signal-card {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+
+    .signal-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .signal-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent-emerald);
+    }
+
+    .mini-progress {
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .mini-progress-fill {
+      height: 100%;
+      background: var(--accent-emerald);
+      border-radius: 4px;
+    }
+
+    .evidence-tag-list {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .evidence-tag {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: var(--accent-gold);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* Action Station */
+    .action-station {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 44, 34, 0.9) 100%);
+      border: 1px solid var(--accent-emerald);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .action-buttons-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .shortcut-pill {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--accent-gold);
+      margin-left: 4px;
+    }
+
+    /* Citation Station */
+    .citation-box {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-main);
+      margin-bottom: 14px;
+    }
+
+    .citation-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg-surface);
+      border: 1px solid var(--accent-emerald);
+      color: var(--text-main);
+      padding: 14px 22px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ========================================================================= */
+    /* SYARAH AI ASSISTANT (RAG) STYLES                                          */
+    /* ========================================================================= */
+    .ai-assistant-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 992px) {
+      .ai-assistant-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ai-sidebar {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .ai-status-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(245, 158, 11, 0.08) 100%);
+      border: 1px solid var(--accent-emerald);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+
+    .ai-guard-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      margin-top: 6px;
+    }
+
+    .ai-category-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ai-preset-btn {
+      width: 100%;
+      text-align: left;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 12px;
+      line-height: 1.4;
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: all 0.2s ease;
+      display: block;
+    }
+    .ai-preset-btn:hover {
+      border-color: var(--accent-gold);
+      background: var(--bg-card-hover);
+      transform: translateX(3px);
+    }
+
+    .ai-main-workspace {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .ai-console-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .ai-mode-selector {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .ai-mode-btn {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .ai-mode-btn:hover {
+      color: var(--text-main);
+      border-color: var(--accent-emerald);
+    }
+    .ai-mode-btn.active {
+      background: var(--accent-emerald);
+      color: #fff;
+      border-color: var(--accent-emerald);
+    }
+
+    .ai-input-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ai-textarea {
+      width: 100%;
+      min-height: 84px;
+      resize: vertical;
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-input);
+      color: var(--text-main);
+      font-family: inherit;
+    }
+
+    .ai-console-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .ai-chat-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .ai-message-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .ai-message-card.user-msg {
+      background: var(--bg-surface);
+      border-left: 4px solid var(--accent-gold);
+    }
+
+    .ai-message-card.assistant-msg {
+      border-left: 4px solid var(--accent-emerald);
+    }
+
+    .ai-msg-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .ai-msg-author {
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-response-body {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-main);
+    }
+
+    .ai-response-body h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      margin: 16px 0 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-response-body h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 14px 0 8px 0;
+    }
+
+    .ai-response-body ul {
+      margin-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .ai-response-body li {
+      margin-bottom: 6px;
+    }
+
+    .ai-arabic-callout {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-right: 4px solid var(--accent-gold);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin: 14px 0;
+      font-family: var(--font-arabic);
+      font-size: 22px;
+      line-height: 2.1;
+      direction: rtl;
+      text-align: right;
+      color: #fde68a;
+    }
+
+    [data-theme="light"] .ai-arabic-callout {
+      background: #fffbeb;
+      color: #92400e;
+      border-color: #fde68a;
+    }
+
+    .ai-citation-deck {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ai-citation-item {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .ai-citation-text {
+      font-size: 13px;
+      color: var(--text-main);
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .ai-audit-ribbon {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 12px;
+      color: var(--accent-emerald);
+      flex-wrap: wrap;
+    }
+
+    .ai-loading-pulse {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 30px;
+      justify-content: center;
+      color: var(--accent-emerald);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    footer {
+      margin-top: auto;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-color);
+      padding: 24px 0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a href="/ui/" class="logo-group" id="app-logo">
+          <div class="logo-icon">ف</div>
+          <div class="logo-text">
+            <h1>Fathul Bari Research <span class="logo-badge">Tahap 5 Review</span></h1>
+            <p>Platform Penelitian Hadis Shahih Bukhari & Syarah Fathul Bari</p>
+          </div>
+        </a>
+
+        <div class="header-actions">
+          <div class="status-pill" id="system-status-pill">
+            <span class="status-dot"></span>
+            <span id="system-status-text">Review Dashboard Active</span>
+          </div>
+          <button class="theme-btn" id="theme-toggle" title="Ganti Tema">🌓</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container" style="flex: 1; padding-top: 20px;">
+    
+    <!-- Tab Navigation -->
+    <nav class="nav-tabs" aria-label="Main Navigation">
+      <button class="tab-btn active" onclick="switchTab('ai')" id="tab-btn-ai">
+        <span>🤖</span> Syarah AI Assistant
+      </button>
+      <button class="tab-btn" onclick="switchTab('review')" id="tab-btn-review">
+        <span>🛡️</span> Tahap 5 Review Dashboard
+      </button>
+      <button class="tab-btn" onclick="switchTab('reader')" id="tab-btn-reader">
+        <span>📖</span> Pembaca Hadis
+      </button>
+      <button class="tab-btn" onclick="switchTab('search')" id="tab-btn-search">
+        <span>🔍</span> Pencarian Cepat
+      </button>
+      <button class="tab-btn" onclick="switchTab('matching')" id="tab-btn-matching">
+        <span>🎯</span> Tahap 4 Matching Studio
+      </button>
+      <button class="tab-btn" onclick="switchTab('dashboard')" id="tab-btn-dashboard">
+        <span>📊</span> Dashboard & Sync
+      </button>
+    </nav>
+
+    <!-- ===================================================================== -->
+    <!-- TAB: SYARAH AI ASSISTANT (RAG)                                        -->
+    <!-- ===================================================================== -->
+    <section id="tab-ai" class="tab-pane active">
+      <div class="ai-assistant-layout">
+        
+        <!-- Left Sidebar: AI Status & Preset Suggestions -->
+        <aside class="ai-sidebar">
+          <div class="ai-status-card">
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Engine Riset RAG</div>
+            <div id="ai-active-engine-title" style="font-size: 15px; font-weight: 800; color: var(--accent-emerald); margin: 4px 0;">
+              Built-in Turats Synthesizer
+            </div>
+            <div class="ai-guard-badge">
+              <span>🛡️</span> Anti-Hallucination Guard Active
+            </div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">
+              Memverifikasi setiap nomor hadis & jilid/halaman Fathul Bari terhadap database lokal.
+            </div>
+          </div>
+
+          <!-- Preset Research Suggestions -->
+          <div>
+            <div class="card-title" style="font-size: 14px; margin-bottom: 12px;">
+              <span>💡</span> Pertanyaan Riset Preset
+            </div>
+            <div id="ai-preset-container">
+              <div style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 12px;">
+                Memuat preset riset...
+              </div>
+            </div>
+          </div>
+
+          <!-- Research Tips -->
+          <div style="background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px; font-size: 12px; color: var(--text-muted);">
+            <div style="font-weight: 700; color: var(--accent-gold); margin-bottom: 4px;">💡 Tips Riset Ilmiah:</div>
+            Sebutkan nomor hadis (misal <i>"hadis 1"</i> atau <i>"nomor 2"</i>) atau topik (<i>"niat"</i>, <i>"suara lonceng"</i>, <i>"tahannuts"</i>) untuk hasil retrieval yang maksimal.
+          </div>
+        </aside>
+
+        <!-- Right Workspace: Console & Conversation Feed -->
+        <div class="ai-main-workspace">
+          
+          <!-- Research Console Card -->
+          <div class="ai-console-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <h2 style="font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                <span>🤖</span> Konsol Riset Syarah Fathul Bari & Hadis
+              </h2>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <button class="btn btn-secondary btn-sm" onclick="clearAIChat()" title="Bersihkan percakapan">
+                  <span>🗑️</span> Reset
+                </button>
+              </div>
+            </div>
+
+            <!-- Mode Selector -->
+            <div class="ai-mode-selector">
+              <span style="font-size: 12px; font-weight: 600; color: var(--text-muted); align-self: center; margin-right: 4px;">Fokus Riset:</span>
+              <button class="ai-mode-btn active" data-mode="syarah_focus" onclick="setAIMode('syarah_focus')">
+                📖 Syarah Ibnu Hajar
+              </button>
+              <button class="ai-mode-btn" data-mode="fiqh_faedah" onclick="setAIMode('fiqh_faedah')">
+                ⚖️ Faedah Hukum & Fikih
+              </button>
+              <button class="ai-mode-btn" data-mode="sanad_matan" onclick="setAIMode('sanad_matan')">
+                🔍 Teks Arab & Matan
+              </button>
+            </div>
+
+            <!-- Query Input -->
+            <div class="ai-input-wrapper">
+              <textarea 
+                id="ai-query-input" 
+                class="ai-textarea" 
+                placeholder="Tuliskan pertanyaan riset Anda... (Contoh: 'Jelaskan hadis tentang niat dan apa penjelasan Ibnu Hajar mengenai qashd?')"
+                onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); submitAIQuery(); }"
+              ></textarea>
+              
+              <div class="ai-console-actions">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <label style="font-size: 12px; color: var(--text-muted);">No. Hadis (Opsional):</label>
+                  <input type="number" id="ai-hadith-num-filter" placeholder="Auto" style="width: 80px; padding: 6px 10px; font-size: 12px;" min="1">
+                </div>
+
+                <div style="display: flex; gap: 8px;">
+                  <button id="ai-submit-btn" class="btn" onclick="submitAIQuery()">
+                    <span>🚀 Kirim Pertanyaan</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat / Research Feed -->
+          <div class="ai-chat-feed" id="ai-chat-feed">
+            
+            <!-- Welcome Card -->
+            <div class="ai-message-card assistant-msg" id="ai-welcome-card">
+              <div class="ai-msg-header">
+                <div class="ai-msg-author">
+                  <span style="font-size: 18px;">🤖</span> Syarah AI Assistant
+                </div>
+                <span class="logo-badge">RAG Ready</span>
+              </div>
+              <div class="ai-response-body">
+                <p>
+                  Ahlan wa sahlan di <b>Syarah AI Assistant</b>. Saya siap membantu riset dan telaah ilmiah hadis 
+                  <b>Shahih al-Bukhari</b> yang terintegrasi langsung dengan syarah terakurat <b>Fathul Bari</b> karya Al-Hafizh Ibnu Hajar al-Asqalani.
+                </p>
+                <p style="margin-top: 10px; font-size: 13px; color: var(--text-muted);">
+                  🛡️ <i>Semua jawaban didasarkan pada basis data turats lokal dengan sitasi tervalidasi dan audit anti-halusinasi.</i>
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB: TAHAP 5 REVIEW DASHBOARD                                         -->
+    <!-- ===================================================================== -->
+    <section id="tab-review" class="tab-pane">
+
+      
+      <!-- Metrics Overview Ribbon -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Antrean</div>
+          <div class="stat-value" id="review-stat-total">0</div>
+          <div class="stat-sub" style="color: var(--text-muted);">Kandidat Hadis–Syarah</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Menunggu Review</div>
+          <div class="stat-value" id="review-stat-pending" style="color: var(--accent-gold);">0</div>
+          <div class="stat-sub">Perlu Keputusan Manusia</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Disetujui Peneliti</div>
+          <div class="stat-value" id="review-stat-verified" style="color: var(--accent-emerald);">0</div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="review-stat-progress-bar" style="width: 0%;"></div>
+          </div>
+          <div class="stat-sub" id="review-stat-progress-sub">0% Terverifikasi</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Ditolak</div>
+          <div class="stat-value" id="review-stat-rejected" style="color: var(--accent-rose);">0</div>
+          <div class="stat-sub">Kandidat Tidak Sesuai</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Rata-Rata Confidence</div>
+          <div class="stat-value" id="review-stat-avg-conf">0.0%</div>
+          <div class="stat-sub">Skor Mesin Deterministic</div>
+        </div>
+      </div>
+
+      <!-- Reviewer Workflow Guide Banner -->
+      <div class="review-workflow-banner">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h3 style="font-size: 15px; font-weight: 700; color: var(--accent-gold); display: flex; align-items: center; gap: 8px;">
+              <span>🧭</span> Alur Kerja Reviewer Ilmiah (Hadis → Syarah Fathul Bari → Halaman → Confidence)
+            </h3>
+            <div class="workflow-steps">
+              <span class="workflow-step-pill"><b>1</b> Pilih kandidat</span>
+              <span class="workflow-step-pill"><b>2</b> Baca matan hadis</span>
+              <span class="workflow-step-pill"><b>3</b> Baca syarah</span>
+              <span class="workflow-step-pill"><b>4</b> Periksa volume & hal</span>
+              <span class="workflow-step-pill"><b>5</b> Periksa confidence & evidence</span>
+              <span class="workflow-step-pill"><b>6</b> Verify / Reject</span>
+              <span class="workflow-step-pill"><b>7</b> Salin Sitasi</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-gold btn-sm" onclick="seedSampleReviewQueue()">✨ Muat Sampel Antrean</button>
+            <button class="btn btn-secondary btn-sm" onclick="loadReviewQueue()">🔄 Refresh</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="card" style="padding: 16px 20px; margin-bottom: 20px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto; gap: 12px; align-items: end;">
+          <div>
+            <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: 600;">Status Antrean</label>
+            <select id="review-filter-status" onchange="loadReviewQueue()">
+              <option value="pending" selected>Menunggu Review (Pending)</option>
+              <option value="verified">Disetujui (Human Verified)</option>
+              <option value="rejected">Ditolak (Rejected)</option>
+              <option value="all">Semua Status</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: 600;">Min. Confidence</label>
+            <select id="review-filter-min-conf" onchange="loadReviewQueue()">
+              <option value="0.0">0.0 (Semua)</option>
+              <option value="0.50">≥ 0.50 (Lemah & Kuat)</option>
+              <option value="0.75" selected>≥ 0.75 (Standar Review)</option>
+              <option value="0.90">≥ 0.90 (Auto Candidate)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: 600;">Jilid Fathul Bari</label>
+            <select id="review-filter-volume" onchange="loadReviewQueue()">
+              <option value="">Semua Jilid</option>
+              <option value="1">Jilid 1 (Kitab Permulaan Wahyu & Iman)</option>
+              <option value="2">Jilid 2 (Kitab Ilmu & Wudhu)</option>
+              <option value="3">Jilid 3 (Kitab Shalat)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: 600;">Cari Hadis / Judul</label>
+            <input type="text" id="review-filter-search" placeholder="No. hadis atau kata kunci..." onkeydown="if(event.key==='Enter') loadReviewQueue()">
+          </div>
+
+          <div>
+            <button class="btn btn-secondary" onclick="loadReviewQueue()" style="height: 42px;">Terapkan Filter</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Master-Detail Researcher Workspace Grid -->
+      <div class="review-layout-grid">
+        
+        <!-- Left Column: Queue List (Step 1: Pilih kandidat) -->
+        <div class="queue-sidebar">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <h4 style="font-size: 14px; font-weight: 700; color: var(--text-main);">📋 Daftar Antrean</h4>
+            <span id="queue-count-badge" class="confidence-badge badge-auto" style="font-size: 11px;">0 item</span>
+          </div>
+
+          <div class="queue-list-container" id="queue-list-container">
+            <div style="text-align: center; padding: 40px 10px; color: var(--text-muted); font-size: 13px;">
+              Memuat antrean review...
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Deep Inspection & Action Station -->
+        <div class="review-workspace" id="review-workspace-panel">
+          
+          <!-- Welcome / Placeholder State -->
+          <div id="review-empty-state" class="section-box" style="text-align: center; padding: 60px 20px;">
+            <div style="font-size: 48px; margin-bottom: 12px;">🔍</div>
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">Pilih Kandidat dari Antrean</h3>
+            <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto; font-size: 14px;">
+              Klik salah satu kandidat di kolom kiri untuk memeriksa hubungan Matan Hadis ↔ Syarah Fathul Bari, memeriksa halaman sumber, dan melakukan verifikasi.
+            </p>
+          </div>
+
+          <!-- Active Review Workspace (Hidden initially) -->
+          <div id="review-active-detail" style="display: none; flex-direction: column; gap: 20px;">
+            
+            <!-- Metadata & Header Box -->
+            <div class="section-box">
+              <div class="section-box-header">
+                <div>
+                  <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 6px; flex-wrap: wrap;">
+                    <span class="hadith-badge" id="detail-hadith-badge">Shahih al-Bukhari #1</span>
+                    <span class="logo-badge" id="detail-sharh-vol-badge">Fathul Bari Jilid 1 • Hal. 9</span>
+                    <span id="detail-status-badge" class="confidence-badge badge-review">STATUS: PENDING</span>
+                  </div>
+                  <h2 id="detail-sharh-title" style="font-size: 18px; font-weight: 700; color: var(--accent-gold);">
+                    Syarah Judul
+                  </h2>
+                </div>
+
+                <div style="text-align: right;">
+                  <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">Confidence Mesin:</div>
+                  <div id="detail-conf-score" style="font-size: 24px; font-weight: 800; color: var(--accent-emerald);">95.0%</div>
+                </div>
+              </div>
+
+              <!-- Shortcut Keys Banner -->
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; font-size: 12px; color: var(--text-muted); background: var(--bg-input); padding: 8px 12px; border-radius: var(--radius-sm);">
+                <span>Shortcut Keyboard:</span>
+                <span><span class="shortcut-pill">V</span> Verify</span> • 
+                <span><span class="shortcut-pill">R</span> Reject</span> • 
+                <span><span class="shortcut-pill">N</span> / <span class="shortcut-pill">↓</span> Next</span> • 
+                <span><span class="shortcut-pill">P</span> / <span class="shortcut-pill">↑</span> Prev</span> • 
+                <span><span class="shortcut-pill">C</span> Copy Citation</span>
+              </div>
+            </div>
+
+            <!-- Step 2: Baca Matan Hadis -->
+            <div class="section-box">
+              <div class="section-box-header">
+                <h3 class="section-box-title">
+                  <span>📖</span> 2. Matan Hadis Shahih al-Bukhari
+                </h3>
+                <span style="font-size: 12px; color: var(--text-muted);" id="detail-collection-source">Koleksi: Shahih al-Bukhari</span>
+              </div>
+
+              <div class="hadith-arabic" id="detail-hadith-arabic" style="margin-bottom: 16px;">
+                Teks Arab hadis...
+              </div>
+
+              <div style="font-size: 15px; line-height: 1.8; color: var(--text-main);" id="detail-hadith-translation">
+                Terjemahan hadis...
+              </div>
+            </div>
+
+            <!-- Step 3 & 4: Baca Syarah & Periksa Volume/Halaman -->
+            <div class="section-box">
+              <div class="section-box-header">
+                <h3 class="section-box-title">
+                  <span>📚</span> 3 & 4. Ulasan Syarah Fathul Bari & Verifikasi Halaman
+                </h3>
+                <div style="display: flex; gap: 6px;">
+                  <span class="confidence-badge badge-auto" id="detail-source-page-tag">Jilid 1 • Hal. 9</span>
+                  <span class="confidence-badge badge-weak" id="detail-pdf-page-tag">PDF Hal. 9</span>
+                </div>
+              </div>
+
+              <div class="syarah-arabic" id="detail-sharh-arabic" style="margin-bottom: 16px; background: rgba(0,0,0,0.15); padding: 18px; border-radius: var(--radius-md);">
+                Teks Syarah Arab...
+              </div>
+
+              <div style="font-size: 15px; line-height: 1.8; color: var(--text-main);" id="detail-sharh-translation">
+                Terjemahan / ulasan syarah...
+              </div>
+            </div>
+
+            <!-- Step 5: Periksa Confidence & Multi-Signal Evidence -->
+            <div class="section-box">
+              <div class="section-box-header">
+                <h3 class="section-box-title">
+                  <span>🎯</span> 5. Multi-Signal Evidence & Skor Matching
+                </h3>
+                <span class="logo-badge">Matching Engine v1</span>
+              </div>
+
+              <div class="signals-grid">
+                <div class="signal-card">
+                  <div class="signal-label">
+                    <span>Sinyal Nomor (50%)</span>
+                    <span id="score-num-raw">1.0</span>
+                  </div>
+                  <div class="signal-value" id="score-num-weighted">0.50</div>
+                  <div class="mini-progress">
+                    <div class="mini-progress-fill" id="score-num-bar" style="width: 100%;"></div>
+                  </div>
+                </div>
+
+                <div class="signal-card">
+                  <div class="signal-label">
+                    <span>Sinyal Teks Matan (35%)</span>
+                    <span id="score-text-raw">0.88</span>
+                  </div>
+                  <div class="signal-value" id="score-text-weighted">0.31</div>
+                  <div class="mini-progress">
+                    <div class="mini-progress-fill" id="score-text-bar" style="width: 88%;"></div>
+                  </div>
+                </div>
+
+                <div class="signal-card">
+                  <div class="signal-label">
+                    <span>Sinyal Konteks (15%)</span>
+                    <span id="score-ctx-raw">0.0</span>
+                  </div>
+                  <div class="signal-value" id="score-ctx-weighted">0.00</div>
+                  <div class="mini-progress">
+                    <div class="mini-progress-fill" id="score-ctx-bar" style="width: 0%;"></div>
+                  </div>
+                </div>
+
+                <div class="signal-card" style="border-color: var(--accent-emerald);">
+                  <div class="signal-label">
+                    <span>Final Confidence</span>
+                    <span id="score-final-raw">0.95</span>
+                  </div>
+                  <div class="signal-value" id="score-final-display" style="color: var(--accent-emerald);">95.0%</div>
+                  <div class="mini-progress">
+                    <div class="mini-progress-fill" id="score-final-bar" style="width: 95%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">Nomor Hadis Terdeteksi dalam Teks:</div>
+                <div class="evidence-tag-list" id="evidence-detected-numbers">
+                  <span class="evidence-tag">#1</span>
+                </div>
+              </div>
+
+              <div style="margin-top: 10px;">
+                <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;">Kutipan Matan yang Dicocokkan:</div>
+                <div class="evidence-tag-list" id="evidence-quotes-found">
+                  <span class="evidence-tag">« إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ »</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 6: Verify atau Reject Action Station -->
+            <div class="action-station">
+              <h3 style="font-size: 16px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+                <span>🛡️</span> 6. Keputusan Peneliti (Human Verification)
+              </h3>
+              <p style="font-size: 13px; color: var(--text-sub); margin-top: 4px;">
+                `confidence` adalah skor mesin; `verified=true` adalah keputusan akhir reviewer manusia.
+              </p>
+
+              <div style="margin-top: 14px;">
+                <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Catatan Peneliti (Opsional / Alasan Penolakan):</label>
+                <textarea id="review-notes-input" rows="2" placeholder="Tuliskan catatan verifikasi, koreksi halaman, atau dasar telaah..."></textarea>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; flex-wrap: wrap; gap: 12px;">
+                <div class="action-buttons-row" style="margin-top: 0;">
+                  <button class="btn btn-success" onclick="verifyCurrentReviewLink()" id="btn-action-verify">
+                    <span>✓ Verify (Setujui Tautan)</span>
+                    <span class="shortcut-pill">V</span>
+                  </button>
+                  <button class="btn btn-danger" onclick="rejectCurrentReviewLink()" id="btn-action-reject">
+                    <span>✕ Reject (Tolak)</span>
+                    <span class="shortcut-pill">R</span>
+                  </button>
+                  <button class="btn btn-secondary btn-sm" onclick="resetCurrentReviewLink()">↺ Reset ke Pending</button>
+                </div>
+
+                <label style="font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                  <input type="checkbox" id="check-auto-advance" checked style="width: auto;">
+                  Otomatis lanjut ke kandidat berikutnya
+                </label>
+              </div>
+            </div>
+
+            <!-- Step 7: Academic Citation Box -->
+            <div class="section-box">
+              <div class="section-box-header">
+                <h3 class="section-box-title">
+                  <span>📜</span> 7. Sitasi Ilmiah Standar (Copy Citation)
+                </h3>
+                <span style="font-size: 12px; color: var(--text-muted);">Siap pakai untuk karya tulis / jurnal</span>
+              </div>
+
+              <div class="citation-box" id="citation-preview-text">
+                Ibnu Hajar al-Asqalani. Fathul Bari Syarah Shahih al-Bukhari, Jilid 1, Hal. 9. Penjelasan Hadis Shahih al-Bukhari No. 1.
+              </div>
+
+              <div class="citation-actions">
+                <button class="btn btn-secondary btn-sm" onclick="copyCitation('standard')">
+                  <span>📋 Salin Standar Turats</span>
+                  <span class="shortcut-pill">C</span>
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="copyCitation('chicago')">📋 Format Chicago</button>
+                <button class="btn btn-secondary btn-sm" onclick="copyCitation('bibtex')">📋 Format BibTeX</button>
+                <button class="btn btn-secondary btn-sm" onclick="copyCitation('markdown')">📋 Format Markdown</button>
+              </div>
+            </div>
+
+            <!-- Navigation Controls between Candidates -->
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px;">
+              <button class="btn btn-secondary" onclick="prevReviewCandidate()" id="btn-nav-prev">
+                <span>← Kandidat Sebelumnya</span>
+                <span class="shortcut-pill">P</span>
+              </button>
+              <span id="nav-candidate-pos" style="font-size: 13px; color: var(--text-muted);">Item 1 dari 10</span>
+              <button class="btn btn-secondary" onclick="nextReviewCandidate()" id="btn-nav-next">
+                <span>Kandidat Berikutnya →</span>
+                <span class="shortcut-pill">N</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 1: HADITH READER                                                  -->
+    <!-- ===================================================================== -->
+    <section id="tab-reader" class="tab-pane active">
+      <div class="hadith-nav-bar">
+        <div class="input-group" style="max-width: 380px;">
+          <input type="number" id="input-hadith-num" min="1" max="7008" value="1" placeholder="Nomor Hadis (1-7008)">
+          <button class="btn" onclick="loadCurrentHadith()" id="btn-load-hadith">
+            <span>Tampilkan</span>
+          </button>
+        </div>
+
+        <div class="quick-chips">
+          <span style="font-size: 12px; color: var(--text-muted);">Cepat:</span>
+          <button class="chip" onclick="jumpTo(1)">#1 Niat</button>
+          <button class="chip" onclick="jumpTo(2)">#2 Wahyu</button>
+          <button class="chip" onclick="jumpTo(3)">#3 Gua Hira</button>
+          <button class="chip" onclick="jumpTo(8)">#8 Rukun Islam</button>
+          <button class="chip" onclick="jumpTo(50)">#50 Shalat</button>
+          <button class="chip" onclick="jumpTo(100)">#100</button>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-secondary btn-sm" onclick="prevHadith()" id="btn-prev-hadith">← Hadis Sebelumnya</button>
+          <button class="btn btn-secondary btn-sm" onclick="nextHadith()" id="btn-next-hadith">Hadis Berikutnya →</button>
+        </div>
+      </div>
+
+      <!-- Hadith Display Card -->
+      <div class="hadith-card" id="hadith-card-container">
+        <div class="hadith-meta-header">
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <span class="hadith-badge" id="hadith-title-badge">Shahih al-Bukhari #1</span>
+            <span id="hadith-sharh-status-badge" class="confidence-badge badge-auto">Syarah Terhubung</span>
+          </div>
+          <div class="hadith-source-tag" id="hadith-source-info">
+            <span>Sumber: Ahmad Sanusi API</span> • 
+            <span id="hadith-cache-status" style="color: var(--accent-emerald); font-weight: 600;">Lokal Database</span>
+          </div>
+        </div>
+
+        <!-- Arabic Text -->
+        <div class="hadith-arabic" id="hadith-arabic-text">
+          حَدَّثَنَا الْحُمَيْدِيُّ عَبْدُ اللَّهِ بْنُ الزُّبَيْرِ قَالَ حَدَّثَنَا سُفْيَانُ قَالَ حَدَّثَنَا يَحْيَى بْنُ سَعِيدٍ الأَنْصَارِيُّ قَالَ أَخْبَرَنِي مُحَمَّدُ بْنُ إِبْرَاهِيمَ التَّيْمِيُّ أَنَّهُ سَمِعَ عَلْقَمَةَ بْنَ وَقَّاصٍ اللَّيْثِيَّ يَقُولُ سَمِعْتُ عُمَرَ بْنَ الْخَطَّابِ رَضِيَ اللَّهُ عَنْهُ عَلَى الْمِنْبَرِ قَالَ سَمِعْتُ رَسُولَ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ يَقُولُ إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى دُنْيَا يُصِيبُهَا أَوْ إِلَى امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ
+        </div>
+
+        <!-- Indonesian Translation -->
+        <div class="hadith-translation" id="hadith-translation-text">
+          Telah menceritakan kepada kami Al Humaidi Abdullah bin Az Zubair berkata, telah menceritakan kepada kami Sufyan yang berkata, telah menceritakan kepada kami Yahya bin Sa'id Al Anshari berkata, telah mengabarkan kepada kami Muhammad bin Ibrahim At Taimi, bahwa dia pernah mendengar Alqamah bin Waqqash Al Laitsi berkata; saya pernah mendengar Umar bin Al Khaththab di atas mimbar berkata; saya mendengar Rasulullah shallallahu 'alaihi wasallam bersabda: "Semua perbuatan tergantung niatnya, dan (balasan) bagi tiap-tiap orang (tergantung) apa yang diniatkan; Barangsiapa niat hijrahnya karena dunia yang ingin digapainya atau karena seorang perempuan yang ingin dinikahinya, maka hijrahnya adalah kepada apa dia diniatkan."
+        </div>
+
+        <!-- Syarah Box -->
+        <div class="syarah-box" id="syarah-box-section">
+          <div class="syarah-header" onclick="toggleSyarah()">
+            <div class="syarah-title">
+              <span>📚</span> Syarah Fathul Bari (Ibnu Hajar al-Asqalani)
+              <span class="logo-badge" id="syarah-vol-badge">Jilid 1 • Hal. 9</span>
+              <span id="syarah-confidence-tag" class="confidence-badge badge-auto" style="font-size: 11px;">Confidence 95.0%</span>
+            </div>
+            <span id="syarah-toggle-icon">▼</span>
+          </div>
+          <div class="syarah-content" id="syarah-content-body">
+            <div class="syarah-arabic" id="syarah-arabic-text">
+              قَوْلُهُ (إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ) أَيْ صِحَّةُ الأَعْمَالِ أَوْ كَمَالُهَا أَوْ قَبُولُهَا مَشْرُوطٌ بِالنِّيَّةِ. وَالنِّيَّةُ فِي اللُّغَةِ الْقَصْدُ، وَفِي الشَّرْعِ قَصْدُ الشَّيْءِ مُقْتَرِنًا بِفِعْلِهِ. وَقَدْ أَوْرَدَ الْمُصَنِّفُ رَحِمَهُ اللَّهُ هَذَا الْحَدِيثَ فِي صَدْرِ كِتَابِهِ لِيَكُونَ خُطْبَةً لَهُ، إِشَارَةً إِلَى أَنَّ كُلَّ عَمَلٍ لَا يُرَادُ بِهِ وَجْهُ اللَّهِ فَهُوَ بَاطِلٌ.
+            </div>
+            <div class="syarah-text" id="syarah-translation-text">
+              Perkataan beliau 'Sesungguhnya amal-amal itu bergantung pada niat': Maksudnya sahnya amal, atau kesempurnaannya, atau diterimanya amal disyaratkan dengan adanya niat. Niat secara bahasa bermakna 'maksud/tujuan', sedangkan secara syariat adalah menyengaja suatu hal yang diiringi dengan perbuatannya. Al-Bukhari membawakan hadis ini di awal kitabnya sebagai khutbah (pembuka) kitab, sebagai isyarat bahwa setiap amal yang tidak ditujukan mengharap wajah Allah maka amal itu batil.
+            </div>
+            <div style="margin-top: 14px; display: flex; gap: 8px; align-items: center;" id="syarah-review-actions-container">
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions Toolbar -->
+        <div class="hadith-actions">
+          <div class="font-controls">
+            <span style="font-size: 13px; color: var(--text-muted); margin-right: 6px;">Ukuran Font Arab:</span>
+            <button class="btn btn-secondary btn-sm" onclick="changeFontSize(-2)">A-</button>
+            <button class="btn btn-secondary btn-sm" onclick="changeFontSize(2)">A+</button>
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary btn-sm" onclick="copyArabic()">📋 Salin Teks Arab</button>
+            <button class="btn btn-secondary btn-sm" onclick="copyTranslation()">📋 Salin Terjemahan</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 2: SEARCH                                                         -->
+    <!-- ===================================================================== -->
+    <section id="tab-search" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span>🔍</span> Pencarian Hadis Database Lokal</h2>
+          <span style="font-size: 13px; color: var(--text-muted);">Mencari teks Arab & terjemahan bahasa Indonesia</span>
+        </div>
+
+        <div class="input-group" style="margin-bottom: 16px;">
+          <input type="text" id="input-search-q" placeholder="Ketik kata kunci (contoh: niat, shalat, iman, hijrah, sabar)..." onkeydown="if(event.key==='Enter') executeSearch()">
+          <button class="btn" onclick="executeSearch()" id="btn-search-go">Cari Hadis</button>
+        </div>
+
+        <div class="quick-chips" style="margin-bottom: 20px;">
+          <span style="font-size: 12px; color: var(--text-muted);">Saran Kata Kunci:</span>
+          <button class="chip" onclick="searchKeyword('niat')">niat</button>
+          <button class="chip" onclick="searchKeyword('iman')">iman</button>
+          <button class="chip" onclick="searchKeyword('shalat')">shalat</button>
+          <button class="chip" onclick="searchKeyword('puasa')">puasa</button>
+          <button class="chip" onclick="searchKeyword('zakat')">zakat</button>
+          <button class="chip" onclick="searchKeyword('haji')">haji</button>
+          <button class="chip" onclick="searchKeyword('ilmu')">ilmu</button>
+          <button class="chip" onclick="searchKeyword('akhlak')">akhlak</button>
+        </div>
+
+        <div class="search-results-info" id="search-info" style="display: none; justify-content: space-between; margin-bottom: 16px; color: var(--text-muted); font-size: 14px;">
+          <span>Hasil pencarian untuk: <b id="search-query-display"></b></span>
+          <span id="search-count-display">0 hadis ditemukan</span>
+        </div>
+
+        <div class="search-grid" id="search-results-container">
+          <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+            Masukkan kata kunci di atas untuk mencari hadis.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 3: TAHAP 4 MATCHING STUDIO                                        -->
+    <!-- ===================================================================== -->
+    <section id="tab-matching" class="tab-pane">
+      
+      <!-- Formula Banner -->
+      <div class="card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(245, 158, 11, 0.08) 100%); border-color: rgba(245, 158, 11, 0.3);">
+        <div class="card-header">
+          <h2 class="card-title"><span>🎯</span> Tahap 4 — Hadith–Sharh Matching Engine (v1)</h2>
+          <span class="logo-badge">Deterministic & Audit-Friendly</span>
+        </div>
+        <p style="font-size: 14px; margin-bottom: 12px;">
+          <b>Formula Scoring:</b> <code style="background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 4px; color: var(--accent-gold);">final = number_score*0.50 + text_score*0.35 + context_score*0.15</code>
+        </p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 13px;">
+          <span class="confidence-badge badge-auto">≥ 0.90: auto_candidate</span>
+          <span class="confidence-badge badge-review">0.75 – 0.89: review</span>
+          <span class="confidence-badge badge-weak">0.50 – 0.74: weak_match</span>
+          <span class="confidence-badge badge-rejected">&lt; 0.50: reject</span>
+        </div>
+      </div>
+
+      <!-- Candidate Inspector Section -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span>🔍</span> Uji Scoring Kandidat per Seksi Syarah</h2>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-gold btn-sm" onclick="seedTahap3Samples()">✨ Muat Sampel Seksi</button>
+            <button class="btn btn-secondary btn-sm" onclick="loadMatchingStudioData()">🔄 Refresh Data</button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: 12px; margin-bottom: 18px; align-items: end;">
+          <div>
+            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Pilih Seksi Syarah Fathul Bari</label>
+            <select id="select-sharh-section" onchange="inspectSelectedCandidates()">
+              <option value="">-- Memuat daftar seksi syarah... --</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Top-K Candidates</label>
+            <select id="select-top-k" onchange="inspectSelectedCandidates()">
+              <option value="5">Top 5 Kandidat</option>
+              <option value="10" selected>Top 10 Kandidat</option>
+              <option value="20">Top 20 Kandidat</option>
+            </select>
+          </div>
+          <div>
+            <button class="btn" onclick="persistCurrentCandidates()" id="btn-persist-candidates">
+              <span>💾 Persist ke Database</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Candidate Results Table -->
+        <div class="table-responsive" style="margin-bottom: 12px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Hadis Shahih Bukhari</th>
+                <th>Number Score (50%)</th>
+                <th>Text Score (35%)</th>
+                <th>Context (15%)</th>
+                <th>Final Confidence</th>
+                <th>Kategori Engine</th>
+              </tr>
+            </thead>
+            <tbody id="candidates-tbody">
+              <tr>
+                <td colspan="7" style="text-align: center; color: var(--text-muted);">Pilih seksi syarah di atas untuk melihat kandidat.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Verified / Active Links Table -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span>🔗</span> Tautan Hadits–Syarah Tersimpan di Database</h2>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <label style="font-size: 13px; color: var(--text-muted);">Min Confidence:</label>
+            <select id="filter-min-conf" style="width: auto; padding: 6px 12px; font-size: 13px;" onchange="loadMatchingLinks()">
+              <option value="0.90">≥ 0.90 (Auto Candidate)</option>
+              <option value="0.75" selected>≥ 0.75 (Review / High)</option>
+              <option value="0.50">≥ 0.50 (Semua di atas 50%)</option>
+              <option value="0.0">Semua</option>
+            </select>
+            <button class="btn btn-secondary btn-sm" onclick="loadMatchingLinks()">Terapkan Filter</button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Hadis</th>
+                <th>Seksi Syarah</th>
+                <th>Confidence</th>
+                <th>Kategori Review</th>
+                <th>Verifikasi Peneliti</th>
+                <th>Aksi Verifikasi Manusia</th>
+              </tr>
+            </thead>
+            <tbody id="matching-links-tbody">
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-muted);">Memuat tautan hadits–syarah...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 4: DASHBOARD & SYNC                                               -->
+    <!-- ===================================================================== -->
+    <section id="tab-dashboard" class="tab-pane">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Hadis Tersimpan</div>
+          <div class="stat-value" id="stat-actual-count">0</div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="stat-progress-bar" style="width: 0%;"></div>
+          </div>
+          <div class="stat-sub" id="stat-progress-sub">0% dari 7.008 hadis</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Target Koleksi</div>
+          <div class="stat-value">7.008</div>
+          <div class="stat-sub" style="color: var(--accent-gold);">Shahih al-Bukhari</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Integritas Data</div>
+          <div class="stat-value" id="stat-integrity-status">Memeriksa...</div>
+          <div class="stat-sub" id="stat-integrity-detail">Missing: 0 Arab • 0 Terjemah</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Total Sinkronisasi</div>
+          <div class="stat-value" id="stat-total-runs">0</div>
+          <div class="stat-sub" id="stat-last-run-time">Belum ada riwayat</div>
+        </div>
+      </div>
+
+      <!-- Sync Trigger Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span>⚡</span> Memicu Sinkronisasi Hadis (API Ingestion)</h2>
+          <span style="font-size: 13px; color: var(--text-muted);">Sync aman dengan exponential backoff & content hash</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 16px;">
+          <div>
+            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Nomor Awal</label>
+            <input type="number" id="sync-start" value="1" min="1" max="7008">
+          </div>
+          <div>
+            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Nomor Akhir</label>
+            <input type="number" id="sync-end" value="10" min="1" max="7008">
+          </div>
+          <div>
+            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Mode Eksekusi</label>
+            <select id="sync-mode">
+              <option value="sync">Synchronous (Tunggu)</option>
+              <option value="async">Asynchronous (Background)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;">
+          <button class="btn btn-gold" onclick="triggerSyncRun()" id="btn-trigger-sync">
+            <span>⚡ Mulai Sinkronisasi</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="setSyncRange(1, 10)">Range 1 - 10</button>
+          <button class="btn btn-secondary btn-sm" onclick="setSyncRange(1, 50)">Range 1 - 50</button>
+          <button class="btn btn-secondary btn-sm" onclick="setSyncRange(1, 100)">Range 1 - 100</button>
+          <button class="btn btn-secondary btn-sm" onclick="setSyncRange(1, 7008)">Semua (1 - 7008)</button>
+        </div>
+
+        <div id="sync-live-log" style="display: none; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; font-family: monospace; font-size: 13px; color: var(--accent-emerald);">
+          Memulai sinkronisasi...
+        </div>
+      </div>
+
+      <!-- Sync Runs Table -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><span>📜</span> Riwayat Sync Runs</h2>
+          <button class="btn btn-secondary btn-sm" onclick="loadDashboardData()">🔄 Refresh</button>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Waktu Mulai</th>
+                <th>Koleksi</th>
+                <th>Status</th>
+                <th>Fetched</th>
+                <th>Inserted</th>
+                <th>Updated</th>
+                <th>Failed</th>
+              </tr>
+            </thead>
+            <tbody id="sync-runs-tbody">
+              <tr>
+                <td colspan="7" style="text-align: center; color: var(--text-muted);">Memuat riwayat sinkronisasi...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">
+    <span id="toast-icon">✓</span>
+    <span id="toast-message">Notifikasi</span>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p><b>Fathul Bari Research Platform</b> — Tahap 5: Review Dashboard • FastAPI, PostgreSQL, Alembic</p>
+    </div>
+  </footer>
+
+  <script>
+    let currentHadithNumber = 1;
+    let currentArabicFontSize = 28;
+    let cachedSectionsList = [];
+
+    // Review Dashboard State
+    let currentReviewQueue = [];
+    let activeReviewLinkId = null;
+    let activeReviewData = null;
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('theme-toggle');
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+
+    // Toast Notification
+    function showToast(msg, icon = '✓') {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-icon').textContent = icon;
+      document.getElementById('toast-message').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3200);
+    }
+
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      const pane = document.getElementById('tab-' + tabId);
+      const btn = document.getElementById('tab-btn-' + tabId);
+      if (pane) pane.classList.add('active');
+      if (btn) btn.classList.add('active');
+
+      if (tabId === 'ai') {
+        window.location.hash = 'ai';
+        loadAIStatusAndSuggestions();
+      } else if (tabId === 'review') {
+        window.location.hash = 'review';
+        loadReviewQueue();
+      } else if (tabId === 'dashboard') {
+        loadDashboardData();
+      } else if (tabId === 'matching') {
+        loadMatchingStudioData();
+      }
+    }
+
+    // =========================================================================
+    // SYARAH AI ASSISTANT (RAG) LOGIC
+    // =========================================================================
+    let currentAIMode = 'syarah_focus';
+    let aiSuggestionsLoaded = false;
+
+    function setAIMode(mode) {
+      currentAIMode = mode;
+      document.querySelectorAll('.ai-mode-btn').forEach(btn => {
+        if (btn.getAttribute('data-mode') === mode) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    async function loadAIStatusAndSuggestions() {
+      if (aiSuggestionsLoaded) return;
+      
+      try {
+        // Load Status
+        const statusRes = await fetch('/api/v1/ai/status');
+        if (statusRes.ok) {
+          const statusData = await statusRes.json();
+          const engineTitle = document.getElementById('ai-active-engine-title');
+          if (engineTitle) {
+            engineTitle.textContent = statusData.active_engine || 'Built-in Turats Synthesizer';
+          }
+        }
+
+        // Load Suggestions
+        const suggRes = await fetch('/api/v1/ai/suggestions');
+        if (suggRes.ok) {
+          const suggData = await suggRes.json();
+          const container = document.getElementById('ai-preset-container');
+          if (container && suggData.categories) {
+            container.innerHTML = '';
+            suggData.categories.forEach(cat => {
+              const catDiv = document.createElement('div');
+              catDiv.style.marginBottom = '14px';
+
+              const titleDiv = document.createElement('div');
+              titleDiv.className = 'ai-category-title';
+              titleDiv.innerHTML = `<span>${cat.icon}</span> ${escapeHtml(cat.category)}`;
+              catDiv.appendChild(titleDiv);
+
+              cat.questions.forEach(q => {
+                const btn = document.createElement('button');
+                btn.className = 'ai-preset-btn';
+                btn.innerHTML = `
+                  <div style="font-weight: 700; color: var(--accent-emerald); margin-bottom: 2px;">${escapeHtml(q.title)}</div>
+                  <div style="color: var(--text-muted); font-size: 11px;">${escapeHtml(q.prompt)}</div>
+                `;
+                btn.onclick = () => {
+                  submitAIQuery(q.prompt, q.hadith_number);
+                };
+                catDiv.appendChild(btn);
+              });
+
+              container.appendChild(catDiv);
+            });
+            aiSuggestionsLoaded = true;
+          }
+        }
+      } catch (err) {
+        console.error('Error loading AI suggestions:', err);
+      }
+    }
+
+    function clearAIChat() {
+      const feed = document.getElementById('ai-chat-feed');
+      feed.innerHTML = `
+        <div class="ai-message-card assistant-msg" id="ai-welcome-card">
+          <div class="ai-msg-header">
+            <div class="ai-msg-author">
+              <span style="font-size: 18px;">🤖</span> Syarah AI Assistant
+            </div>
+            <span class="logo-badge">RAG Ready</span>
+          </div>
+          <div class="ai-response-body">
+            <p>
+              Percakapan telah direset. Silakan ajukan pertanyaan riset hadis Shahih al-Bukhari & Syarah Fathul Bari.
+            </p>
+          </div>
+        </div>
+      `;
+      document.getElementById('ai-query-input').value = '';
+      document.getElementById('ai-hadith-num-filter').value = '';
+      showToast('Riwayat riset AI telah dibersihkan.');
+    }
+
+    function copyToClipboard(text, label = 'Teks') {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`${label} berhasil disalin ke clipboard!`);
+      }).catch(err => {
+        showToast('Gagal menyalin ke clipboard', '!');
+      });
+    }
+
+    function formatAIMarkdownToHTML(markdownText) {
+      if (!markdownText) return '';
+      
+      let html = markdownText;
+
+      // Extract and style Arabic quotes with special calligraphy callout
+      html = html.replace(/«\s*([^»]+?)\s*»/g, function(match, p1) {
+        return `<div class="ai-arabic-callout">${p1.trim()}</div>`;
+      });
+
+      // Headers
+      html = html.replace(/^### (.*$)/gim, '<h3><span>📜</span> $1</h3>');
+      html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
+
+      // Bold & Italic
+      html = html.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+      html = html.replace(/\*(.*?)\*/g, '<i>$1</i>');
+
+      // Blockquotes
+      html = html.replace(/^> (.*$)/gim, '<div style="background: rgba(0,0,0,0.15); border-left: 3px solid var(--accent-gold); padding: 8px 14px; margin: 8px 0; border-radius: 4px; font-size: 14px;">$1</div>');
+
+      // Bullet lists
+      html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
+      html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+
+      // Line breaks
+      html = html.replace(/\n\n/g, '<br><br>');
+      html = html.replace(/\n/g, '<br>');
+
+      return html;
+    }
+
+    async function submitAIQuery(customQuery = null, customHadithNum = null) {
+      const queryInput = document.getElementById('ai-query-input');
+      const hadithNumInput = document.getElementById('ai-hadith-num-filter');
+      const submitBtn = document.getElementById('ai-submit-btn');
+
+      const query = (customQuery !== null ? customQuery : queryInput.value).trim();
+      const hadithNum = customHadithNum !== null ? customHadithNum : (hadithNumInput.value ? parseInt(hadithNumInput.value) : null);
+
+      if (!query) {
+        showToast('Mohon ketikkan pertanyaan riset terlebih dahulu.', '!');
+        queryInput.focus();
+        return;
+      }
+
+      // Append User Question to feed
+      const feed = document.getElementById('ai-chat-feed');
+      const userCard = document.createElement('div');
+      userCard.className = 'ai-message-card user-msg';
+      userCard.innerHTML = `
+        <div class="ai-msg-header">
+          <div class="ai-msg-author" style="color: var(--accent-gold);">
+            <span>👤</span> Pertanyaan Peneliti
+          </div>
+          <span style="font-size: 11px; color: var(--text-muted);">${new Date().toLocaleTimeString()}</span>
+        </div>
+        <div class="ai-response-body" style="font-size: 15px; font-weight: 500;">
+          ${escapeHtml(query)}
+        </div>
+      `;
+      feed.appendChild(userCard);
+
+      // Append Loading Indicator
+      const loadingCard = document.createElement('div');
+      loadingCard.className = 'ai-message-card assistant-msg';
+      loadingCard.id = 'ai-active-loading-card';
+      loadingCard.innerHTML = `
+        <div class="ai-loading-pulse">
+          <div class="status-dot"></div>
+          <span>Menelusuri Hadis & Syarah Fathul Bari (RAG Synthesis)...</span>
+        </div>
+      `;
+      feed.appendChild(loadingCard);
+
+      // Scroll to bottom
+      loadingCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      // Disable inputs
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>⏳ Menjawab...</span>';
+      queryInput.value = '';
+
+      try {
+        const payload = {
+          query: query,
+          kitab: 'shahih_bukhari',
+          hadith_number: hadithNum,
+          mode: currentAIMode,
+        };
+
+        const res = await fetch('/api/v1/ai/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await res.json();
+        
+        // Remove loading card
+        const currentLoading = document.getElementById('ai-active-loading-card');
+        if (currentLoading) currentLoading.remove();
+
+        if (!res.ok) {
+          const errCard = document.createElement('div');
+          errCard.className = 'ai-message-card assistant-msg';
+          errCard.innerHTML = `
+            <div class="ai-msg-header">
+              <div class="ai-msg-author" style="color: var(--accent-rose);">
+                <span>⚠️</span> Error Asisten AI
+              </div>
+            </div>
+            <div class="ai-response-body" style="color: var(--accent-rose);">
+              ${escapeHtml(data.detail || 'Terjadi kesalahan saat memproses pertanyaan.')}
+            </div>
+          `;
+          feed.appendChild(errCard);
+          showToast('Gagal memproses pertanyaan AI', '!');
+          return;
+        }
+
+        // Render Assistant Message Card
+        const asstCard = document.createElement('div');
+        asstCard.className = 'ai-message-card assistant-msg';
+
+        const providerLabel = data.provider || 'Built-in Turats Synthesizer';
+        const formattedAnswer = formatAIMarkdownToHTML(data.answer || '');
+
+        let citationsHtml = '';
+        if (data.citations && data.citations.length > 0) {
+          citationsHtml = `
+            <div class="ai-citation-deck">
+              <div style="font-size: 12px; font-weight: 700; color: var(--accent-gold); display: flex; align-items: center; gap: 6px;">
+                <span>📚</span> Sitasi & Referensi Turats Terverifikasi:
+              </div>
+          `;
+
+          data.citations.forEach((cit, cIdx) => {
+            const citText = cit.standard_citation || `${cit.type === 'sharh' ? 'Fathul Bari' : 'Shahih Bukhari'}`;
+            const verPill = cit.verified 
+              ? '<span class="confidence-badge badge-auto" style="font-size: 10px;">✅ Human Verified</span>'
+              : '<span class="confidence-badge badge-review" style="font-size: 10px;">⏳ Auto Candidate</span>';
+            
+            const hadithBtn = (cit.related_hadith || cit.number) ? `
+              <button class="btn btn-secondary btn-sm" onclick="inspectHadithFromAI(${cit.related_hadith || cit.number})" title="Buka di Pembaca Hadis">
+                📖 Hadis #${cit.related_hadith || cit.number}
+              </button>
+            ` : '';
+
+            citationsHtml += `
+              <div class="ai-citation-item">
+                <div class="ai-citation-text">
+                  ${escapeHtml(citText)} ${verPill}
+                </div>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  ${hadithBtn}
+                  <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('${escapeHtml(citText).replace(/'/g, "\\'")}', 'Sitasi')" title="Salin Sitasi">
+                    📋 Salin
+                  </button>
+                </div>
+              </div>
+            `;
+          });
+
+          citationsHtml += '</div>';
+        }
+
+        // Anti-hallucination audit badge
+        const audit = data.anti_hallucination_audit || {};
+        const auditBadge = `
+          <div class="ai-audit-ribbon">
+            <span>🛡️</span> <b>Audit Anti-Halusinasi:</b> ${audit.passed ? 'Lulus 100% (Semua nomor hadis & halaman terverifikasi di DB)' : 'Peringatan: Terdapat referensi di luar konteks DB'}
+            • <i>Model: ${escapeHtml(providerLabel)}</i>
+          </div>
+        `;
+
+        asstCard.innerHTML = `
+          <div class="ai-msg-header">
+            <div class="ai-msg-author">
+              <span style="font-size: 18px;">🤖</span> Syarah AI Assistant
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span class="logo-badge">${escapeHtml(providerLabel)}</span>
+              <span style="font-size: 11px; color: var(--text-muted);">${new Date().toLocaleTimeString()}</span>
+            </div>
+          </div>
+
+          <div class="ai-response-body">
+            ${formattedAnswer}
+          </div>
+
+          ${citationsHtml}
+          ${auditBadge}
+        `;
+
+        feed.appendChild(asstCard);
+        asstCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      } catch (err) {
+        console.error('AI ask error:', err);
+        const currentLoading = document.getElementById('ai-active-loading-card');
+        if (currentLoading) currentLoading.remove();
+        showToast('Koneksi terputus ke AI Assistant: ' + err.message, '!');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>🚀 Kirim Pertanyaan</span>';
+      }
+    }
+
+    function inspectHadithFromAI(hadithNum) {
+      if (!hadithNum) return;
+      switchTab('reader');
+      loadHadith(hadithNum);
+      showToast(`Membuka Shahih Bukhari Hadis #${hadithNum}`);
+    }
+
+
+    function changeFontSize(delta) {
+      currentArabicFontSize = Math.max(20, Math.min(48, currentArabicFontSize + delta));
+      document.getElementById('hadith-arabic-text').style.fontSize = currentArabicFontSize + 'px';
+      document.documentElement.style.setProperty('--arabic-font-size', currentArabicFontSize + 'px');
+    }
+
+    function toggleSyarah() {
+      const content = document.getElementById('syarah-content-body');
+      const icon = document.getElementById('syarah-toggle-icon');
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.textContent = '▼';
+      } else {
+        content.style.display = 'none';
+        icon.textContent = '▶';
+      }
+    }
+
+    // =========================================================================
+    // TAHAP 5: REVIEW DASHBOARD LOGIC
+    // =========================================================================
+    async function loadReviewQueue() {
+      const status = document.getElementById('review-filter-status').value || 'pending';
+      const minConf = document.getElementById('review-filter-min-conf').value || 0.0;
+      const volume = document.getElementById('review-filter-volume').value;
+      const search = document.getElementById('review-filter-search').value.trim();
+
+      const container = document.getElementById('queue-list-container');
+      container.innerHTML = '<div style="text-align: center; padding: 30px; color: var(--text-muted);">Memuat antrean...</div>';
+
+      let url = `/api/v1/review/queue?status=${status}&minimum_confidence=${minConf}&limit=100`;
+      if (volume) url += `&volume=${volume}`;
+      if (search) url += `&search=${encodeURIComponent(search)}`;
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        currentReviewQueue = data.queue || [];
+        const stats = data.stats || {};
+
+        // Update Overview Stats Ribbon
+        document.getElementById('review-stat-total').textContent = (stats.total_links || 0).toLocaleString();
+        document.getElementById('review-stat-pending').textContent = (stats.pending_count || 0).toLocaleString();
+        document.getElementById('review-stat-verified').textContent = (stats.verified_count || 0).toLocaleString();
+        document.getElementById('review-stat-rejected').textContent = (stats.rejected_count || 0).toLocaleString();
+        document.getElementById('review-stat-avg-conf').textContent = `${stats.avg_confidence_percent || 0}%`;
+
+        const totalLinks = stats.total_links || 1;
+        const verifiedPct = totalLinks > 0 ? Math.round(((stats.verified_count || 0) / totalLinks) * 100) : 0;
+        document.getElementById('review-stat-progress-bar').style.width = `${verifiedPct}%`;
+        document.getElementById('review-stat-progress-sub').textContent = `${verifiedPct}% Terverifikasi (${stats.verified_count || 0}/${totalLinks})`;
+
+        document.getElementById('queue-count-badge').textContent = `${currentReviewQueue.length} item`;
+
+        if (currentReviewQueue.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 40px 10px; color: var(--text-muted); font-size: 13px;">
+              Tidak ada kandidat dengan filter ini.<br><br>
+              <button class="btn btn-gold btn-sm" onclick="seedSampleReviewQueue()">✨ Muat Sampel Antrean</button>
+            </div>
+          `;
+          showReviewDetail(null);
+          return;
+        }
+
+        container.innerHTML = currentReviewQueue.map((item, idx) => {
+          const isActive = item.link_id === activeReviewLinkId || (idx === 0 && !activeReviewLinkId);
+          const badgeClass = item.review_status === 'verified' 
+            ? 'badge-verified' 
+            : item.review_status === 'rejected'
+            ? 'badge-rejected'
+            : item.confidence >= 0.90 
+            ? 'badge-auto' 
+            : item.confidence >= 0.75 
+            ? 'badge-review' 
+            : 'badge-weak';
+
+          return `
+            <div class="queue-card-item ${isActive ? 'active' : ''}" id="queue-item-${item.link_id}" onclick="selectReviewCandidate('${item.link_id}')">
+              <div class="queue-card-top">
+                <span class="hadith-badge" style="font-size: 11px; padding: 2px 8px;">#${item.hadith_number}</span>
+                <span class="confidence-badge ${badgeClass}" style="font-size: 10px;">${item.confidence_percent}% • ${item.review_status.toUpperCase()}</span>
+              </div>
+              <div class="queue-card-title">${item.sharh_title}</div>
+              <div class="queue-card-snippet">${item.hadith_translation_excerpt || item.sharh_translation_excerpt || ''}</div>
+              <div style="margin-top: 6px; font-size: 10px; color: var(--text-muted); display: flex; justify-content: space-between;">
+                <span>Jilid ${item.volume || 1} • Hal. ${item.page || '-'}</span>
+                <span>${item.verified ? '✓ Verified' : '⏳ Pending'}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Auto select first item if none active
+        if (!activeReviewLinkId && currentReviewQueue.length > 0) {
+          selectReviewCandidate(currentReviewQueue[0].link_id);
+        } else if (activeReviewLinkId) {
+          selectReviewCandidate(activeReviewLinkId);
+        }
+
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--accent-rose);">Gagal memuat antrean.</div>';
+      }
+    }
+
+    async function selectReviewCandidate(linkId) {
+      activeReviewLinkId = linkId;
+
+      document.querySelectorAll('.queue-card-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById(`queue-item-${linkId}`);
+      if (activeEl) activeEl.classList.add('active');
+
+      try {
+        const res = await fetch(`/api/v1/review/links/${linkId}`);
+        if (!res.ok) throw new Error('Detail tidak ditemukan');
+        const data = await res.json();
+        activeReviewData = data;
+        showReviewDetail(data);
+      } catch (err) {
+        console.error(err);
+        showToast('Gagal memuat detail kandidat.', '!');
+      }
+    }
+
+    function showReviewDetail(data) {
+      const emptyEl = document.getElementById('review-empty-state');
+      const detailEl = document.getElementById('review-active-detail');
+
+      if (!data) {
+        emptyEl.style.display = 'block';
+        detailEl.style.display = 'none';
+        return;
+      }
+
+      emptyEl.style.display = 'none';
+      detailEl.style.display = 'flex';
+
+      const hadith = data.hadith || {};
+      const sharh = data.sharh || {};
+      const evidence = data.evidence || {};
+      const nav = data.nav || {};
+
+      // Header Info
+      document.getElementById('detail-hadith-badge').textContent = `Shahih al-Bukhari #${hadith.number || '-'}`;
+      document.getElementById('detail-sharh-vol-badge').textContent = `Fathul Bari Jilid ${sharh.volume || 1} • Hal. ${sharh.printed_page || sharh.page || '-'}`;
+      
+      const statusBadge = document.getElementById('detail-status-badge');
+      statusBadge.textContent = data.review_status.toUpperCase();
+      statusBadge.className = 'confidence-badge ' + (
+        data.review_status === 'verified' ? 'badge-verified' : 
+        data.review_status === 'rejected' ? 'badge-rejected' : 
+        data.confidence >= 0.90 ? 'badge-auto' : 'badge-review'
+      );
+
+      document.getElementById('detail-sharh-title').textContent = sharh.title || 'Ulasan Syarah Fathul Bari';
+      document.getElementById('detail-conf-score').textContent = `${data.confidence_percent || 0}%`;
+
+      // Step 2: Matan Hadis
+      document.getElementById('detail-collection-source').textContent = `Koleksi: ${hadith.collection_name || 'Shahih al-Bukhari'}`;
+      document.getElementById('detail-hadith-arabic').textContent = hadith.arabic_text || 'Teks Arab tidak tersedia.';
+      document.getElementById('detail-hadith-translation').textContent = hadith.translation || 'Terjemahan tidak tersedia.';
+
+      // Step 3 & 4: Syarah & Halaman
+      document.getElementById('detail-source-page-tag').textContent = `Jilid ${sharh.volume || 1} • Halaman Cetak ${sharh.printed_page || sharh.page || '-'}`;
+      document.getElementById('detail-pdf-page-tag').textContent = `PDF Hal. ${sharh.pdf_page || sharh.page || '-'}`;
+      document.getElementById('detail-sharh-arabic').textContent = sharh.arabic_text || 'Teks Arab syarah tidak tersedia.';
+      document.getElementById('detail-sharh-translation').textContent = sharh.translation || 'Terjemahan syarah tidak tersedia.';
+
+      // Step 5: Multi-Signal Evidence
+      const numScore = evidence.number_score || 0.0;
+      const textScore = evidence.text_score || 0.0;
+      const ctxScore = evidence.context_score || 0.0;
+
+      document.getElementById('score-num-raw').textContent = numScore.toFixed(2);
+      document.getElementById('score-num-weighted').textContent = (numScore * 0.50).toFixed(2);
+      document.getElementById('score-num-bar').style.width = `${Math.min(100, numScore * 100)}%`;
+
+      document.getElementById('score-text-raw').textContent = textScore.toFixed(3);
+      document.getElementById('score-text-weighted').textContent = (textScore * 0.35).toFixed(3);
+      document.getElementById('score-text-bar').style.width = `${Math.min(100, textScore * 100)}%`;
+
+      document.getElementById('score-ctx-raw').textContent = ctxScore.toFixed(2);
+      document.getElementById('score-ctx-weighted').textContent = (ctxScore * 0.15).toFixed(2);
+      document.getElementById('score-ctx-bar').style.width = `${Math.min(100, ctxScore * 100)}%`;
+
+      document.getElementById('score-final-raw').textContent = (data.confidence || 0.0).toFixed(4);
+      document.getElementById('score-final-display').textContent = `${data.confidence_percent || 0}%`;
+      document.getElementById('score-final-bar').style.width = `${Math.min(100, data.confidence_percent || 0)}%`;
+
+      // Evidence tags
+      const nums = evidence.detected_numbers || [];
+      document.getElementById('evidence-detected-numbers').innerHTML = nums.length > 0
+        ? nums.map(n => `<span class="evidence-tag">Hadis #${n}</span>`).join('')
+        : '<span style="font-size: 12px; color: var(--text-muted);">- Tidak ada nomor eksplisit -</span>';
+
+      const quotes = evidence.quotes_found || [];
+      document.getElementById('evidence-quotes-found').innerHTML = quotes.length > 0
+        ? quotes.map(q => `<span class="evidence-tag">« ${q} »</span>`).join('')
+        : '<span style="font-size: 12px; color: var(--text-muted);">- Tidak ada kutipan matan langsung terdeteksi -</span>';
+
+      // Notes
+      document.getElementById('review-notes-input').value = data.notes || '';
+
+      // Step 7: Citation
+      if (data.citations && data.citations.standard) {
+        document.getElementById('citation-preview-text').textContent = data.citations.standard;
+      }
+
+      // Nav position
+      document.getElementById('nav-candidate-pos').textContent = `Kandidat ${nav.current_index || 1} dari ${nav.total_items || currentReviewQueue.length}`;
+    }
+
+    async function verifyCurrentReviewLink() {
+      if (!activeReviewLinkId) return;
+      const notes = document.getElementById('review-notes-input').value.trim();
+      const btn = document.getElementById('btn-action-verify');
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`/api/v1/review/links/${activeReviewLinkId}/verify`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ notes: notes || undefined, reviewer: 'Peneliti Hadis' })
+        });
+        const result = await res.json();
+        showToast('✓ Tautan berhasil DIVERIFIKASI (verified=true)!');
+        
+        loadReviewQueue();
+
+        const autoAdvance = document.getElementById('check-auto-advance').checked;
+        if (autoAdvance) {
+          nextReviewCandidate();
+        }
+      } catch (err) {
+        showToast('Gagal memverifikasi tautan.', '!');
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function rejectCurrentReviewLink() {
+      if (!activeReviewLinkId) return;
+      const notes = document.getElementById('review-notes-input').value.trim();
+      const btn = document.getElementById('btn-action-reject');
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`/api/v1/review/links/${activeReviewLinkId}/reject`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ notes: notes || undefined, reason: 'Kandidat tidak relevan', reviewer: 'Peneliti Hadis' })
+        });
+        const result = await res.json();
+        showToast('✕ Tautan berhasil DITOLAK (rejected).');
+        
+        loadReviewQueue();
+
+        const autoAdvance = document.getElementById('check-auto-advance').checked;
+        if (autoAdvance) {
+          nextReviewCandidate();
+        }
+      } catch (err) {
+        showToast('Gagal menolak tautan.', '!');
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function resetCurrentReviewLink() {
+      if (!activeReviewLinkId) return;
+      try {
+        const res = await fetch(`/api/v1/review/links/${activeReviewLinkId}/reset`, { method: 'POST' });
+        showToast('Status tautan direset ke pending.');
+        loadReviewQueue();
+      } catch (err) {
+        showToast('Gagal mereset tautan.', '!');
+      }
+    }
+
+    function prevReviewCandidate() {
+      if (!activeReviewData || !currentReviewQueue.length) return;
+      const currentIndex = currentReviewQueue.findIndex(q => q.link_id === activeReviewLinkId);
+      if (currentIndex > 0) {
+        selectReviewCandidate(currentReviewQueue[currentIndex - 1].link_id);
+      } else {
+        showToast('Sudah di kandidat pertama.');
+      }
+    }
+
+    function nextReviewCandidate() {
+      if (!activeReviewData || !currentReviewQueue.length) return;
+      const currentIndex = currentReviewQueue.findIndex(q => q.link_id === activeReviewLinkId);
+      if (currentIndex >= 0 && currentIndex < currentReviewQueue.length - 1) {
+        selectReviewCandidate(currentReviewQueue[currentIndex + 1].link_id);
+      } else {
+        showToast('Sudah di kandidat terakhir dalam antrean.');
+      }
+    }
+
+    function copyCitation(format = 'standard') {
+      if (!activeReviewData || !activeReviewData.citations) {
+        showToast('Pilih kandidat terlebih dahulu.', '!');
+        return;
+      }
+
+      const text = activeReviewData.citations[format] || activeReviewData.citations.standard;
+      navigator.clipboard.writeText(text);
+      showToast(`Sitasi (${format.toUpperCase()}) berhasil disalin!`);
+    }
+
+    async function seedSampleReviewQueue() {
+      try {
+        const res = await fetch('/api/v1/review/seed-sample-queue', { method: 'POST' });
+        const data = await res.json();
+        showToast(data.message || 'Sampel antrean berhasil dimuat!');
+        loadReviewQueue();
+      } catch (err) {
+        showToast('Gagal memuat sampel antrean.', '!');
+      }
+    }
+
+    // =========================================================================
+    // READER & HADITH FUNCTIONS
+    // =========================================================================
+    async function loadHadith(nomor) {
+      try {
+        currentHadithNumber = parseInt(nomor) || 1;
+        document.getElementById('input-hadith-num').value = currentHadithNumber;
+        
+        const res = await fetch(`/api/v1/hadith/shahih_bukhari/${currentHadithNumber}?auto_sync=true`);
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ detail: 'Gagal memuat hadis' }));
+          showToast(`Hadis #${currentHadithNumber} belum tersedia: ${err.detail}`, '!');
+          return;
+        }
+
+        const data = await res.json();
+        document.getElementById('hadith-title-badge').textContent = `Shahih al-Bukhari #${data.nomor}`;
+        document.getElementById('hadith-arabic-text').textContent = data.arab || 'Teks Arab tidak tersedia.';
+        document.getElementById('hadith-translation-text').textContent = data.terjemah || 'Terjemahan tidak tersedia.';
+        
+        const cacheEl = document.getElementById('hadith-cache-status');
+        if (data.source && data.source.synced_on_demand) {
+          cacheEl.textContent = 'Proxy Synced (Baru)';
+          cacheEl.style.color = 'var(--accent-gold)';
+        } else {
+          cacheEl.textContent = 'Lokal Database';
+          cacheEl.style.color = 'var(--accent-emerald)';
+        }
+
+        loadSharhForHadith(currentHadithNumber);
+
+      } catch (err) {
+        console.error(err);
+        showToast('Error koneksi ke API backend.', '!');
+      }
+    }
+
+    async function loadSharhForHadith(nomor) {
+      try {
+        const res = await fetch(`/api/v1/sharh/hadith/shahih_bukhari/${nomor}`);
+        const data = await res.json();
+        const box = document.getElementById('syarah-box-section');
+        const statusBadge = document.getElementById('hadith-sharh-status-badge');
+        const actionsContainer = document.getElementById('syarah-review-actions-container');
+
+        if (data.sharh_sections && data.sharh_sections.length > 0) {
+          box.style.display = 'block';
+          const s = data.sharh_sections[0];
+          document.getElementById('syarah-vol-badge').textContent = `Jilid ${s.volume || 1} • Hal. ${s.printed_page || s.page || '-'}`;
+          document.getElementById('syarah-arabic-text').textContent = s.arabic_text || '';
+          document.getElementById('syarah-translation-text').textContent = s.translation || 'Ulasan teks syarah dari naskah Fathul Bari.';
+          
+          const confTag = document.getElementById('syarah-confidence-tag');
+          confTag.textContent = `Confidence ${s.confidence_percent || 95}% (${s.review_status.toUpperCase()})`;
+          confTag.className = 'confidence-badge ' + (s.review_status === 'verified' ? 'badge-verified' : s.review_status === 'auto_candidate' ? 'badge-auto' : 'badge-review');
+          
+          statusBadge.textContent = s.verified ? '✓ Syarah Terverifikasi Peneliti' : '⚡ Syarah Terhubung (Auto)';
+          statusBadge.className = 'confidence-badge ' + (s.verified ? 'badge-verified' : 'badge-auto');
+
+          actionsContainer.innerHTML = `
+            <span style="font-size: 12px; color: var(--text-muted);">Aksi Verifikasi Peneliti:</span>
+            <button class="btn btn-sm ${s.verified ? 'btn-secondary' : 'btn'}" onclick="verifyLink('${s.link_id}')">✓ Setujui (Verify)</button>
+            <button class="btn btn-secondary btn-sm" onclick="rejectLink('${s.link_id}')">✕ Tolak (Reject)</button>
+          `;
+        } else {
+          box.style.display = 'block';
+          document.getElementById('syarah-vol-badge').textContent = 'Fondasi Syarah';
+          document.getElementById('syarah-confidence-tag').textContent = 'Belum Ada Tautan';
+          document.getElementById('syarah-arabic-text').textContent = 'جَارِي اسْتِخْرَاجُ وَتَوْثِيقُ شَرْحِ فَتْحِ الْبَارِي لِهَذَا الْحَدِيثِ...';
+          document.getElementById('syarah-translation-text').textContent = 'Kutipan Syarah Fathul Bari untuk nomor ini siap dipetakan dalam matching engine.';
+          statusBadge.textContent = 'Belum Terhubung';
+          statusBadge.className = 'confidence-badge badge-review';
+          actionsContainer.innerHTML = '';
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function verifyLink(linkId) {
+      try {
+        const res = await fetch(`/api/v1/review/links/${linkId}/verify`, { method: 'POST' });
+        const data = await res.json();
+        showToast('Tautan berhasil diverifikasi oleh peneliti!');
+        loadSharhForHadith(currentHadithNumber);
+        loadMatchingLinks();
+      } catch (err) {
+        showToast('Gagal memverifikasi tautan.', '!');
+      }
+    }
+
+    async function rejectLink(linkId) {
+      try {
+        const res = await fetch(`/api/v1/review/links/${linkId}/reject`, { method: 'POST' });
+        const data = await res.json();
+        showToast('Kandidat tautan berhasil ditolak.');
+        loadSharhForHadith(currentHadithNumber);
+        loadMatchingLinks();
+      } catch (err) {
+        showToast('Gagal menolak tautan.', '!');
+      }
+    }
+
+    function loadCurrentHadith() {
+      const n = document.getElementById('input-hadith-num').value;
+      loadHadith(n);
+    }
+
+    function prevHadith() {
+      if (currentHadithNumber > 1) {
+        loadHadith(currentHadithNumber - 1);
+      }
+    }
+
+    function nextHadith() {
+      if (currentHadithNumber < 7008) {
+        loadHadith(currentHadithNumber + 1);
+      }
+    }
+
+    function jumpTo(nomor) {
+      switchTab('reader');
+      loadHadith(nomor);
+    }
+
+    function copyArabic() {
+      const text = document.getElementById('hadith-arabic-text').textContent.trim();
+      navigator.clipboard.writeText(text);
+      showToast('Teks Arab berhasil disalin!');
+    }
+
+    function copyTranslation() {
+      const text = document.getElementById('hadith-translation-text').textContent.trim();
+      navigator.clipboard.writeText(text);
+      showToast('Terjemahan berhasil disalin!');
+    }
+
+    // =========================================================================
+    // SEARCH FUNCTIONS
+    // =========================================================================
+    async function executeSearch() {
+      const q = document.getElementById('input-search-q').value.trim();
+      if (q.length < 2) {
+        showToast('Ketik minimal 2 karakter.', '!');
+        return;
+      }
+
+      const container = document.getElementById('search-results-container');
+      container.innerHTML = '<div style="text-align: center; padding: 30px; color: var(--text-muted);">Mencari hadis...</div>';
+
+      try {
+        const res = await fetch(`/api/v1/hadith/search?q=${encodeURIComponent(q)}&limit=30`);
+        const data = await res.json();
+        
+        document.getElementById('search-info').style.display = 'flex';
+        document.getElementById('search-query-display').textContent = q;
+        document.getElementById('search-count-display').textContent = `${data.total} hadis ditemukan`;
+
+        if (!data.results || data.results.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+              Tidak ada hadis di database lokal yang cocok dengan "<b>${q}</b>".
+            </div>
+          `;
+          return;
+        }
+
+        const regex = new RegExp(`(${q})`, 'gi');
+        container.innerHTML = data.results.map(h => {
+          const highlightedTrans = (h.terjemah || '').replace(regex, '<span class="highlight">$1</span>');
+          return `
+            <div class="search-item" onclick="jumpTo(${h.nomor})">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span class="hadith-badge">#${h.nomor} Shahih al-Bukhari</span>
+                <span style="font-size: 12px; color: var(--accent-emerald);">Buka Hadis →</span>
+              </div>
+              <div style="font-family: var(--font-arabic); font-size: 20px; direction: rtl; text-align: right; color: var(--text-main); margin-bottom: 10px; line-height: 1.8;">${h.arab || ''}</div>
+              <div style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">${highlightedTrans}</div>
+            </div>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function searchKeyword(word) {
+      document.getElementById('input-search-q').value = word;
+      switchTab('search');
+      executeSearch();
+    }
+
+    // =========================================================================
+    // TAHAP 4: MATCHING STUDIO
+    // =========================================================================
+    async function loadMatchingStudioData() {
+      try {
+        const secRes = await fetch('/api/v1/sharh/sections?limit=50');
+        const secData = await secRes.json();
+        cachedSectionsList = secData.sections || [];
+
+        const selectEl = document.getElementById('select-sharh-section');
+        if (cachedSectionsList.length === 0) {
+          selectEl.innerHTML = '<option value="">-- Belum ada seksi syarah. Klik "Muat Sampel Seksi" --</option>';
+        } else {
+          selectEl.innerHTML = cachedSectionsList.map(s => 
+            `<option value="${s.id}">Jilid ${s.volume || 1} Hal. ${s.printed_page || s.page || '-'} - ${s.title}</option>`
+          ).join('');
+          inspectSelectedCandidates();
+        }
+
+        loadMatchingLinks();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function inspectSelectedCandidates() {
+      const selectEl = document.getElementById('select-sharh-section');
+      const sharhId = selectEl.value;
+      const topK = document.getElementById('select-top-k').value || 10;
+      const tbody = document.getElementById('candidates-tbody');
+
+      if (!sharhId) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Pilih seksi syarah di atas untuk melihat kandidat.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Menghitung skor multi-signal untuk Top-' + topK + ' kandidat...</td></tr>';
+
+      try {
+        const res = await fetch(`/api/v1/matching/sharh/${sharhId}/candidates?top_k=${topK}`);
+        const data = await res.json();
+
+        if (!data.candidates || data.candidates.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Tidak ada kandidat hadis yang cocok.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = data.candidates.map((c, idx) => {
+          const badgeClass = c.category === 'auto_candidate' ? 'badge-auto' : c.category === 'review' ? 'badge-review' : 'badge-weak';
+          const star = c.final_confidence >= 0.90 ? '★ ' : '';
+
+          return `
+            <tr>
+              <td><b>#${idx}</b></td>
+              <td>
+                <b style="color: var(--accent-gold); cursor: pointer;" onclick="jumpTo(${c.hadith_number})">${star}Bukhari #${c.hadith_number}</b><br>
+                <span style="font-size: 11px; color: var(--text-muted);">${c.translation_excerpt}</span>
+              </td>
+              <td><code>${(c.number_score * 0.50).toFixed(2)}</code> <span style="font-size: 11px; color: var(--text-muted);">(${c.number_score.toFixed(1)})</span></td>
+              <td><code>${(c.text_score * 0.35).toFixed(4)}</code> <span style="font-size: 11px; color: var(--text-muted);">(${c.text_score.toFixed(2)})</span></td>
+              <td><code>${(c.context_score * 0.15).toFixed(2)}</code></td>
+              <td><b style="color: var(--accent-emerald); font-size: 15px;">${c.confidence_percent}%</b></td>
+              <td><span class="confidence-badge ${badgeClass}">${c.category.toUpperCase()}</span></td>
+            </tr>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.error(err);
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--accent-rose);">Gagal menghitung skor kandidat.</td></tr>';
+      }
+    }
+
+    async function persistCurrentCandidates() {
+      const sharhId = document.getElementById('select-sharh-section').value;
+      const topK = parseInt(document.getElementById('select-top-k').value) || 10;
+      const btn = document.getElementById('btn-persist-candidates');
+
+      if (!sharhId) {
+        showToast('Pilih seksi syarah terlebih dahulu.', '!');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳ Menyimpan...</span>';
+
+      try {
+        const res = await fetch(`/api/v1/matching/sharh/${sharhId}/persist`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ top_k: topK, min_confidence: 0.50 })
+        });
+        const data = await res.json();
+        showToast(`Berhasil menyimpan ${data.persisted_count} kandidat tautan ke database!`);
+        loadMatchingLinks();
+      } catch (err) {
+        showToast('Gagal menyimpan tautan.', '!');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>💾 Persist ke Database</span>';
+      }
+    }
+
+    async function loadMatchingLinks() {
+      const minConf = document.getElementById('filter-min-conf').value || 0.75;
+      const tbody = document.getElementById('matching-links-tbody');
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Memuat tautan...</td></tr>';
+
+      try {
+        const res = await fetch(`/api/v1/matching/links?minimum_confidence=${minConf}&limit=50`);
+        const data = await res.json();
+
+        if (!data.links || data.links.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Tidak ada tautan dengan confidence ≥ ${minConf}.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = data.links.map(l => {
+          const badgeClass = l.review_status === 'verified' ? 'badge-verified' : l.review_status === 'auto_candidate' ? 'badge-auto' : l.review_status === 'rejected' ? 'badge-rejected' : 'badge-review';
+
+          return `
+            <tr>
+              <td>
+                <b style="color: var(--accent-gold); cursor: pointer;" onclick="jumpTo(${l.hadith_number})">Bukhari #${l.hadith_number}</b>
+              </td>
+              <td>
+                <b>Jilid ${l.sharh_volume || 1} Hal. ${l.sharh_page || '-'}</b><br>
+                <span style="font-size: 12px; color: var(--text-muted);">${l.sharh_title || ''}</span>
+              </td>
+              <td><b style="color: var(--accent-emerald);">${l.confidence_percent}%</b></td>
+              <td><span class="confidence-badge ${badgeClass}">${l.review_status.toUpperCase()}</span></td>
+              <td>${l.verified ? '<span style="color: var(--accent-blue); font-weight: 600;">✓ Disetujui Peneliti</span>' : '<span style="color: var(--text-muted);">Pending Review</span>'}</td>
+              <td>
+                <div style="display: flex; gap: 6px;">
+                  <button class="btn btn-sm ${l.verified ? 'btn-secondary' : 'btn'}" onclick="verifyLink('${l.link_id}')">✓ Setujui</button>
+                  <button class="btn btn-secondary btn-sm" onclick="rejectLink('${l.link_id}')">✕ Tolak</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function seedTahap3Samples() {
+      try {
+        const res = await fetch('/api/v1/sharh/seed-sample', { method: 'POST' });
+        const data = await res.json();
+        showToast(data.message || 'Sampel data berhasil dimuat!');
+        loadMatchingStudioData();
+      } catch (err) {
+        showToast('Gagal memuat sampel syarah.', '!');
+      }
+    }
+
+    // =========================================================================
+    // DASHBOARD & SYNC
+    // =========================================================================
+    async function loadDashboardData() {
+      try {
+        const [qualityRes, runsRes] = await Promise.all([
+          fetch('/api/v1/admin/data-quality'),
+          fetch('/api/v1/admin/sync-runs?limit=15')
+        ]);
+
+        const quality = await qualityRes.json();
+        const runs = await runsRes.json();
+
+        const actual = quality.actual || 0;
+        const expected = quality.expected || 7008;
+        const pct = quality.progress_percent || (expected ? ((actual/expected)*100).toFixed(1) : 0);
+
+        document.getElementById('stat-actual-count').textContent = actual.toLocaleString();
+        document.getElementById('stat-progress-bar').style.width = Math.min(100, pct) + '%';
+        document.getElementById('stat-progress-sub').textContent = `${pct}% dari ${expected.toLocaleString()} hadis`;
+
+        const integEl = document.getElementById('stat-integrity-status');
+        if (quality.status === 'healthy') {
+          integEl.textContent = 'Sempurna ✓';
+          integEl.style.color = 'var(--accent-emerald)';
+        } else if (actual > 0) {
+          integEl.textContent = 'Tersinkron Sebagian';
+          integEl.style.color = 'var(--accent-gold)';
+        } else {
+          integEl.textContent = 'Belum Ada Data';
+          integEl.style.color = 'var(--text-muted)';
+        }
+
+        document.getElementById('stat-integrity-detail').textContent = 
+          `Missing: ${quality.missing_arabic || 0} Arab • ${quality.missing_translation || 0} Terjemahan`;
+
+        document.getElementById('stat-total-runs').textContent = (quality.total_sync_runs || (runs ? runs.length : 0)).toString();
+        if (quality.last_sync_run && quality.last_sync_run.started_at) {
+          const d = new Date(quality.last_sync_run.started_at);
+          document.getElementById('stat-last-run-time').textContent = `Terakhir: ${d.toLocaleTimeString()}`;
+        }
+
+        const tbody = document.getElementById('sync-runs-tbody');
+        if (!runs || runs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Belum ada riwayat sinkronisasi.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = runs.map(r => {
+          const time = r.started_at ? new Date(r.started_at).toLocaleString('id-ID') : '-';
+          const statusBadge = r.status === 'completed' 
+            ? '<span style="color: var(--accent-emerald); font-weight: 600;">✓ Completed</span>'
+            : r.status === 'running' 
+            ? '<span style="color: var(--accent-gold); font-weight: 600;">⚡ Running</span>'
+            : `<span style="color: var(--accent-rose); font-weight: 600;">✕ ${r.status}</span>`;
+
+          return `
+            <tr>
+              <td>${time}</td>
+              <td><b>${r.collection || 'shahih_bukhari'}</b></td>
+              <td>${statusBadge}</td>
+              <td>${r.fetched || 0}</td>
+              <td><span style="color: var(--accent-emerald); font-weight: 600;">+${r.inserted || 0}</span></td>
+              <td>${r.updated || 0}</td>
+              <td>${r.failed > 0 ? `<span style="color: var(--accent-rose); font-weight: 600;">${r.failed}</span>` : '0'}</td>
+            </tr>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function setSyncRange(start, end) {
+      document.getElementById('sync-start').value = start;
+      document.getElementById('sync-end').value = end;
+    }
+
+    async function triggerSyncRun() {
+      const start = parseInt(document.getElementById('sync-start').value) || 1;
+      const end = parseInt(document.getElementById('sync-end').value) || 10;
+      const mode = document.getElementById('sync-mode').value;
+      const btn = document.getElementById('btn-trigger-sync');
+      const logBox = document.getElementById('sync-live-log');
+
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳ Memproses...</span>';
+      logBox.style.display = 'block';
+      logBox.textContent = `Menghubungkan ke Ahmad Sanusi API untuk nomor #${start} s/d #${end}...`;
+
+      try {
+        const res = await fetch(`/api/v1/admin/sync?sync_mode=${mode}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            collection_slug: 'shahih_bukhari',
+            start: start,
+            end: end,
+          })
+        });
+
+        const result = await res.json();
+        if (!res.ok) {
+          logBox.textContent = `Error: ${result.detail || 'Gagal sinkronisasi'}`;
+          showToast('Sinkronisasi gagal: ' + (result.detail || ''), '!');
+        } else {
+          logBox.innerHTML = `
+            <b>✓ Sinkronisasi Selesai!</b><br>
+            Status: ${result.status}<br>
+            Fetched: ${result.fetched || 0} | Inserted: ${result.inserted || 0} | Failed: ${result.failed || 0}
+          `;
+          showToast(`Sinkronisasi #${start}-#${end} berhasil diproses!`);
+          loadDashboardData();
+        }
+      } catch (err) {
+        logBox.textContent = `Error request: ${err.message}`;
+        showToast('Koneksi terputus saat sinkronisasi.', '!');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>⚡ Mulai Sinkronisasi</span>';
+      }
+    }
+
+    // =========================================================================
+    // KEYBOARD SHORTCUTS
+    // =========================================================================
+    window.addEventListener('keydown', (e) => {
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+
+      const reviewTabActive = document.getElementById('tab-review').classList.contains('active');
+      const readerTabActive = document.getElementById('tab-reader').classList.contains('active');
+
+      if (reviewTabActive) {
+        if (e.key === 'v' || e.key === 'V') {
+          e.preventDefault();
+          verifyCurrentReviewLink();
+        } else if (e.key === 'r' || e.key === 'R') {
+          e.preventDefault();
+          rejectCurrentReviewLink();
+        } else if (e.key === 'n' || e.key === 'N' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          nextReviewCandidate();
+        } else if (e.key === 'p' || e.key === 'P' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          prevReviewCandidate();
+        } else if (e.key === 'c' || e.key === 'C') {
+          e.preventDefault();
+          copyCitation('standard');
+        }
+      } else if (readerTabActive) {
+        if (e.key === 'ArrowLeft') {
+          prevHadith();
+        } else if (e.key === 'ArrowRight') {
+          nextHadith();
+        }
+      }
+    });
+
+    // =========================================================================
+    // INITIALIZATION & URL ROUTING
+    // =========================================================================
+    const initialHash = window.location.hash;
+    const initialPath = window.location.pathname;
+
+    if (initialPath.includes('/review') || initialHash === '#review') {
+      switchTab('review');
+    } else if (initialHash === '#reader') {
+      switchTab('reader');
+      loadHadith(1);
+    } else {
+      switchTab('ai');
+      loadHadith(1);
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,29 @@
+[
+  {
+    "volume": 1,
+    "page": 9,
+    "hadith_number": 1,
+    "kitab": "shahih_bukhari",
+    "verified": true,
+    "chapter": "Bab Permulaan Wahyu",
+    "notes": "Hadis pembuka Innamal A'malu bin-Niyyat"
+  },
+  {
+    "volume": 1,
+    "page": 24,
+    "hadith_number": 2,
+    "kitab": "shahih_bukhari",
+    "verified": true,
+    "chapter": "Bab Bagaimana Permulaan Wahyu",
+    "notes": "Hadis Aisyah tentang cara datangnya wahyu kepada Rasulullah"
+  },
+  {
+    "volume": 1,
+    "page": 35,
+    "hadith_number": 3,
+    "kitab": "shahih_bukhari",
+    "verified": true,
+    "chapter": "Bab Permulaan Wahyu di Gua Hira",
+    "notes": "Hadis Aisyah tentang peristiwa Iqra di Gua Hira dan Khadijah"
+  }
+]
